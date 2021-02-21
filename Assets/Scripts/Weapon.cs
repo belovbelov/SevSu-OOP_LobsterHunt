@@ -40,7 +40,7 @@ namespace weapon {
             }
 
             //Weapon FX
-            currentWeapon.transform.position -= currentWeapon.transform.forward * loadout[currentIndex].kickback;
+            currentWeapon.transform.position += currentWeapon.transform.forward * loadout[currentIndex].kickback;
         }
 
         void equip(int p_ind) {

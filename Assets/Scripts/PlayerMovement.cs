@@ -25,11 +25,15 @@ public class PlayerMovement : MonoBehaviour {
     Vector3 weaponOrigin;
 
     //weaponBob
-    float timer = 0f;
+    private Vector3 weaponParentCurrentPos;
+    private Vector3 targetWeaponBobPosition;
+    private float movementCounter;
+    private float idleCounter;
     #endregion
     void Start() {
         baseFOV = normalCam.fieldOfView;
         weaponOrigin = weaponParent.transform.localPosition;
+        weaponParentCurrentPos = weaponOrigin;
     }
     void Update() {
         //Axles
@@ -40,17 +44,19 @@ public class PlayerMovement : MonoBehaviour {
         //Controls
         bool sprint = Input.GetKey(KeyCode.LeftShift);
         bool jump = Input.GetButtonDown("Jump");
+        bool crouch = Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl);
 
 
         //States
         isSprinting = sprint && velocity.z > 0;
         bool isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         bool isJumping = jump && isGrounded;
+        bool isCrouching = crouch && !isSprinting && !isJumping && isGrounded;
 
 
         //Movement
         if (isGrounded && velocity.y < 0) {
-            velocity.y = -2f;
+            velocity.y = -4f;
         }
 
         float adjustedSpeed = speed;
@@ -76,23 +82,42 @@ public class PlayerMovement : MonoBehaviour {
         } else {
             normalCam.fieldOfView = Mathf.Lerp(normalCam.fieldOfView, baseFOV, Time.deltaTime * 8f);
         }
-        weaponBob();
+        //Head Bob
+        if (!isGrounded)
+        {
+            //airborne
+            HeadBob(idleCounter, 0.015f, 0.015f);
+            idleCounter += 0;
+            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime  * 2f* 0.2f);
+        }
+        else if (velocity.x == 0 && velocity.z == 0)
+        {
+            //idling
+            HeadBob(idleCounter, 0.015f, 0.015f);
+            idleCounter += Time.deltaTime;
+            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime  * 1f* 0.2f);
+        }
+        else if (!isSprinting && (velocity.x != 0 || velocity.z != 0))
+        {
+            //walking
+            HeadBob(movementCounter, 0.015f, 0.015f);
+            movementCounter += Time.deltaTime * 5f;
+            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 12f * 0.2f);
+        }
+        else
+        {
+            //sprinting
+            HeadBob(movementCounter, 0.025f, 0.025f);
+            movementCounter += Time.deltaTime * 6.75f;
+            targetWeaponBobPosition.z -= 0.5f;
+            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 12f * 0.2f);
+        }
     }
     #region Private methods
-    void weaponBob() {
-        if (isSprinting && (Mathf.Abs(velocity.x) > 0.35f || Mathf.Abs(velocity.z) > 0.35f)) {
-            timer += Time.deltaTime;
-            weaponParent.transform.localPosition = new Vector3(weaponOrigin.x, weaponOrigin.y, Mathf.Sin(timer * 8f) * 0.1f);
-        } else {
-            if (Mathf.Abs(velocity.x) > 0.35f || Mathf.Abs(velocity.z) > 0.35f) {
-                timer += Time.deltaTime;
-                weaponParent.transform.localPosition = new Vector3(weaponOrigin.x, weaponOrigin.y, Mathf.Sin(timer * 4f) * 0.1f);
-            } else {
-                timer = 0;
-                timer += Time.deltaTime;
-                weaponParent.transform.localPosition = new Vector3(weaponOrigin.x, weaponOrigin.y, Mathf.Lerp(weaponParent.transform.localPosition.z, 0, timer * 5f));
-            }
-        }
+    void HeadBob(float p_z, float p_x_intensity, float p_y_intensity)
+    {
+        float t_aim_adjust = 1f;
+        targetWeaponBobPosition = weaponParentCurrentPos + new Vector3(Mathf.Cos(p_z) * p_x_intensity * t_aim_adjust, Mathf.Sin(p_z * 2) * p_y_intensity * t_aim_adjust, 0);
     }
     #endregion
 }
