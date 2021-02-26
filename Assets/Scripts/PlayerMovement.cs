@@ -56,7 +56,7 @@ public class PlayerMovement : MonoBehaviour {
 
         //Movement
         if (isGrounded && velocity.y < 0) {
-            velocity.y = -4f;
+            velocity.y = -2f;
         }
 
         float adjustedSpeed = speed;
