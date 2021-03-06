@@ -30,7 +30,6 @@ namespace weapon {
         }
         #region Private methods
         void shoot() {
-
             RaycastHit hit;
             if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, loadout[currentIndex].range)) {
                 Target target = hit.transform.GetComponent<Target>();

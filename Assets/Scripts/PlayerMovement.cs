@@ -16,6 +16,16 @@ public class PlayerMovement : MonoBehaviour {
     public Vector3 velocity;
     public float sprintModifier;
     bool isSprinting;
+    public Transform waterCheck;
+    bool sprint;
+    bool jump;
+    bool crouch;
+    bool isGrounded;
+    bool isJumping;
+    bool isSwimming;
+    bool isArising;
+    bool isCrouching;
+    float adjustedSpeed;
 
     //FOV
     public Transform weaponParent;
@@ -41,17 +51,21 @@ public class PlayerMovement : MonoBehaviour {
         velocity.z = Input.GetAxis("Vertical");
 
 
-        //Controls
-        bool sprint = Input.GetKey(KeyCode.LeftShift);
-        bool jump = Input.GetButtonDown("Jump");
-        bool crouch = Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl);
+        //Controls объявление переменных за update
+        sprint = Input.GetKey(KeyCode.LeftControl);
+        jump = Input.GetButton("Jump");
+        crouch = Input.GetKey(KeyCode.LeftShift);
 
 
         //States
         isSprinting = sprint && velocity.z > 0;
-        bool isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        bool isJumping = jump && isGrounded;
-        bool isCrouching = crouch && !isSprinting && !isJumping && isGrounded;
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        isJumping = jump && isGrounded;
+       
+        isSwimming = waterCheck.position.y > transform.position.y;
+        isArising = jump && isSwimming;
+        isCrouching = crouch && isSwimming && !isArising;
+
 
 
         //Movement
@@ -59,7 +73,7 @@ public class PlayerMovement : MonoBehaviour {
             velocity.y = -2f;
         }
 
-        float adjustedSpeed = speed;
+        adjustedSpeed = speed;
         if (isSprinting) {
             adjustedSpeed *= sprintModifier;
         }
@@ -72,7 +86,18 @@ public class PlayerMovement : MonoBehaviour {
         if (isJumping) {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
-        velocity.y += gravity * Time.deltaTime;
+        if (isSwimming){
+            velocity.y = Mathf.Lerp(velocity.y, -2.0f, Time.deltaTime * 1.0f);
+            if (isArising){
+                velocity.y = Mathf.Lerp(velocity.y,Mathf.Sqrt(11.772f),Time.deltaTime * 8.0f);
+            }
+            if (isCrouching){
+                velocity.y = Mathf.Lerp(velocity.y, -Mathf.Sqrt(11.772f), Time.deltaTime * 8.0f);
+            }
+        }
+        else {
+            velocity.y += gravity * Time.deltaTime; 
+        }
         controller.Move(velocity * Time.deltaTime);
         
 
@@ -109,8 +134,8 @@ public class PlayerMovement : MonoBehaviour {
             //sprinting
             HeadBob(movementCounter, 0.025f, 0.025f);
             movementCounter += Time.deltaTime * 6.75f;
-            targetWeaponBobPosition.z -= 0.5f;
-            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 12f * 0.2f);
+            targetWeaponBobPosition.z -= 0.4f;
+            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 12f * 0.1f);
         }
     }
     #region Private methods

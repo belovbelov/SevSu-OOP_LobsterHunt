@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - Texture2D_D87314E6:
-        m_Texture: {fileID: 2800000, guid: 4f78a034782bd644aaa7a9a38aed669f, type: 3}
+        m_Texture: {fileID: 2800000, guid: 955fcb59671cfde46a5393e73c3a5134, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -74,12 +74,12 @@ Material:
     - _Cull: 2
     - _Cutoff: 0.5
     - _Depth: 0
-    - _Displacement: 1.5
+    - _Displacement: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _FoamDistance: -1.15
-    - _FoamStrength: 2
-    - _FoamTile: -3.38
+    - _FoamDistance: -2.68
+    - _FoamStrength: 0.2
+    - _FoamTile: 80
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
