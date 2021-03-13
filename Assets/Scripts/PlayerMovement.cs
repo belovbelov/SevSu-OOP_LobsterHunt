@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
     #region Variables
@@ -61,7 +59,7 @@ public class PlayerMovement : MonoBehaviour {
         isSprinting = sprint && velocity.z > 0;
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         isJumping = jump && isGrounded;
-       
+
         isSwimming = waterCheck.position.y > transform.position.y;
         isArising = jump && isSwimming;
         isCrouching = crouch && isSwimming && !isArising;
@@ -86,20 +84,19 @@ public class PlayerMovement : MonoBehaviour {
         if (isJumping) {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
-        if (isSwimming){
+        if (isSwimming) {
             velocity.y = Mathf.Lerp(velocity.y, -2.0f, Time.deltaTime * 1.0f);
-            if (isArising){
-                velocity.y = Mathf.Lerp(velocity.y,Mathf.Sqrt(11.772f),Time.deltaTime * 8.0f);
+            if (isArising) {
+                velocity.y = Mathf.Lerp(velocity.y, Mathf.Sqrt(11.772f), Time.deltaTime * 8.0f);
             }
-            if (isCrouching){
+            if (isCrouching) {
                 velocity.y = Mathf.Lerp(velocity.y, -Mathf.Sqrt(11.772f), Time.deltaTime * 8.0f);
             }
-        }
-        else {
-            velocity.y += gravity * Time.deltaTime; 
+        } else {
+            velocity.y += gravity * Time.deltaTime;
         }
         controller.Move(velocity * Time.deltaTime);
-        
+
 
         //FOV
         if (isSprinting) {
@@ -108,29 +105,22 @@ public class PlayerMovement : MonoBehaviour {
             normalCam.fieldOfView = Mathf.Lerp(normalCam.fieldOfView, baseFOV, Time.deltaTime * 8f);
         }
         //Head Bob
-        if (!isGrounded)
-        {
+        if (!isGrounded) {
             //airborne
             HeadBob(idleCounter, 0.015f, 0.015f);
             idleCounter += 0;
-            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime  * 2f* 0.2f);
-        }
-        else if (velocity.x == 0 && velocity.z == 0)
-        {
+            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 2f * 0.2f);
+        } else if (velocity.x == 0 && velocity.z == 0) {
             //idling
             HeadBob(idleCounter, 0.015f, 0.015f);
             idleCounter += Time.deltaTime;
-            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime  * 1f* 0.2f);
-        }
-        else if (!isSprinting && (velocity.x != 0 || velocity.z != 0))
-        {
+            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 1f * 0.2f);
+        } else if (!isSprinting && (velocity.x != 0 || velocity.z != 0)) {
             //walking
             HeadBob(movementCounter, 0.015f, 0.015f);
             movementCounter += Time.deltaTime * 5f;
             weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 12f * 0.2f);
-        }
-        else
-        {
+        } else {
             //sprinting
             HeadBob(movementCounter, 0.025f, 0.025f);
             movementCounter += Time.deltaTime * 6.75f;
@@ -139,8 +129,7 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
     #region Private methods
-    void HeadBob(float p_z, float p_x_intensity, float p_y_intensity)
-    {
+    void HeadBob(float p_z, float p_x_intensity, float p_y_intensity) {
         float t_aim_adjust = 1f;
         targetWeaponBobPosition = weaponParentCurrentPos + new Vector3(Mathf.Cos(p_z) * p_x_intensity * t_aim_adjust, Mathf.Sin(p_z * 2) * p_y_intensity * t_aim_adjust, 0);
     }
