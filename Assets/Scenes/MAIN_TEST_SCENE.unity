@@ -600,7 +600,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 974949503}
   m_LocalRotation: {x: 0.8660254, y: 0, z: -0.5, w: 0}
-  m_LocalPosition: {x: 355.5, y: 26, z: 264.2}
+  m_LocalPosition: {x: 355.5, y: 27, z: 264.2}
   m_LocalScale: {x: 5, y: 1, z: 5}
   m_Children: []
   m_Father: {fileID: 1708288582}
@@ -887,7 +887,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 1836556780}
   speed: 4
-  gravity: -29.43
+  gravity: -19.62
   groundCheck: {fileID: 1727158565}
   groundDistance: 0.21
   groundMask:
