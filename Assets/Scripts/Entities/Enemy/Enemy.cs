@@ -2,16 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-abstract class Creature
-{
-    public int baseSpeed;
-    abstract public void move();
-    public Creature(int bSpeed) { baseSpeed = bSpeed; }
-}
+
 class Fish:Creature
 {
     public int vision { get; set; }
-    public override void move()
+    public override void Move()
     {
 
     }
@@ -21,7 +16,7 @@ class EnemyFish:Fish
 {
     
     public int attackRange { get; set; }
-    public override void move()
+    public override void Move()
     {
         Debug.Log(baseSpeed);
         Debug.Log(vision);
@@ -39,7 +34,7 @@ public class Enemy : MonoBehaviour
     {
         EnemyFish f1 = new EnemyFish(1, 2, 3);
 
-        f1.move();
+        f1.Move();
 
     }
 
