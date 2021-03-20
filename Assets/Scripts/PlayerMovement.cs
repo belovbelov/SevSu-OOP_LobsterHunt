@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -53,9 +55,9 @@ public class PlayerMovement : MonoBehaviour
 
 
         //Controls объявление переменных за update
-        sprint = Input.GetKey(KeyCode.LeftControl);
+        sprint = Input.GetKey(KeyCode.LeftShift);
         jump = Input.GetButton("Jump");
-        crouch = Input.GetKey(KeyCode.LeftShift);
+        crouch = Input.GetKey(KeyCode.LeftControl);
 
 
         //States

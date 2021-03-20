@@ -12,6 +12,10 @@ namespace weapon {
         GameObject currentWeapon;
         int currentIndex;
         #endregion
+        void Start()
+        {
+            equip(0);
+        }
 
         void Update() {
             if (currentWeapon != null) {
@@ -20,16 +24,17 @@ namespace weapon {
                 }
             }
             
-            if (Input.GetKeyDown(KeyCode.Alpha1)) { 
-                equip(0);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha2)) {
-                equip(1);
-            }
+            //if (Input.GetKeyDown(KeyCode.Alpha1)) { 
+            //    equip(0);
+            //}
+            //if (Input.GetKeyDown(KeyCode.Alpha2)) {
+            //    equip(1);
+            //}
             currentWeapon.transform.localPosition = Vector3.Lerp(currentWeapon.transform.localPosition, Vector3.zero, Time.deltaTime * 5f);
         }
         #region Private methods
         void shoot() {
+
             RaycastHit hit;
             if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, loadout[currentIndex].range)) {
                 Target target = hit.transform.GetComponent<Target>();
