@@ -10,7 +10,7 @@ class Fish:Creature
     {
 
     }
-    public Fish(int bSpeed, int Vision):base(bSpeed) { vision = Vision; }
+    //public Fish(int bSpeed, int Vision):base(bSpeed) { vision = Vision; }
 }
 class EnemyFish:Fish
 {
@@ -18,12 +18,12 @@ class EnemyFish:Fish
     public int attackRange { get; set; }
     public override void Move()
     {
-        Debug.Log(baseSpeed);
+        //Debug.Log(baseSpeed);
         Debug.Log(vision);
         Debug.Log(attackRange);
         
     }
-    public EnemyFish(int baseSpeed,int vision, int ARange):base(baseSpeed,vision) { attackRange = ARange;}
+    //public EnemyFish(int baseSpeed,int vision, int ARange):base(baseSpeed,vision) { attackRange = ARange;}
 }
 
 public class Enemy : MonoBehaviour
@@ -32,9 +32,9 @@ public class Enemy : MonoBehaviour
     
     void Start()
     {
-        EnemyFish f1 = new EnemyFish(1, 2, 3);
+        //EnemyFish f1 = new EnemyFish(1, 2, 3);
 
-        f1.Move();
+        //f1.Move();
 
     }
 

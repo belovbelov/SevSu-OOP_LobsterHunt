@@ -1,24 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class MouseLook : MonoBehaviour {
+public class MouseLook : MonoBehaviour
+{
     #region Variables
 
-    public float mouseSensetivity = 100f;
+    public float mouseSensetivity = 400f;
     public Transform playerBody;
     float xRotation = 0f;
+    float mouseX;
+    float mouseY;
+
 
     #endregion
 
-    void Start() {
+    void Start()
+    {
         Cursor.lockState = CursorLockMode.Locked;
     }
 
 
-    void Update() {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensetivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensetivity * Time.deltaTime;
+    void Update()
+    {
+        mouseX = Input.GetAxis("Mouse X") * mouseSensetivity * Time.deltaTime;
+        mouseY = Input.GetAxis("Mouse Y") * mouseSensetivity * Time.deltaTime;
 
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);

@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-abstract class Creature
+public abstract class Creature : MonoBehaviour
 {
-    public int baseSpeed;
+    public float creatureSpeed = 4.0f;
+
     abstract public void Move();
-    public Creature(int bSpeed) { baseSpeed = bSpeed; }
 }
