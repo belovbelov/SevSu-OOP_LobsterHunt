@@ -11,18 +11,13 @@ public class Enemy :Fish
         enemySpeed = fishSpeed;
     }
     public Transform[] points;
-    int current;
+    int current = 0;
     float enemySpeed;
     int colliderCounter = 0;
 
     public int attackRange { get; set; }
 
     Quaternion targetRotation;
-
-    void Start()
-    {
-        current = 0; 
-    }
 
     private void Update()
     {
@@ -77,7 +72,8 @@ public class Enemy :Fish
         if (other.gameObject.CompareTag("Player"))
         {
             transform.position = Vector3.MoveTowards(transform.position, other.transform.position, enemySpeed * Time.deltaTime * 0.1f);
-            transform.rotation = Quaternion.LookRotation(other.transform.position - transform.position) * Quaternion.Euler(0f, 90f, 0f);
+            targetRotation = Quaternion.LookRotation(other.transform.position - transform.position) * Quaternion.Euler(0f, 90f, 0f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 14f);
         }
     }
 }
