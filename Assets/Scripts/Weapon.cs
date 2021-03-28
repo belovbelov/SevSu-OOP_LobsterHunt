@@ -14,19 +14,19 @@ namespace weapon {
         #endregion
 
         void Update() {
-            //if (currentWeapon != null) {
-            //    if (Input.GetButtonDown("Fire1")) {
-            //        shoot();
-            //    }
-            //}
+            if (currentWeapon != null) {
+                if (Input.GetButtonDown("Fire1")) {
+                    shoot();
+                }
+            }
             
-            //if (Input.GetKeyDown(KeyCode.Alpha1)) { 
-            //    equip(0);
-            //}
-            //if (Input.GetKeyDown(KeyCode.Alpha2)) {
-            //    equip(1);
-            //}
-            //currentWeapon.transform.localPosition = Vector3.Lerp(currentWeapon.transform.localPosition, Vector3.zero, Time.deltaTime * 5f);
+            if (Input.GetKeyDown(KeyCode.Alpha1)) { 
+                equip(0);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2)) {
+                equip(1);
+            }
+            currentWeapon.transform.localPosition = Vector3.Lerp(currentWeapon.transform.localPosition, Vector3.zero, Time.deltaTime * 5f);
         }
         #region Private methods
         void shoot() {

@@ -3,45 +3,81 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-class Fish:Creature
-{
-    public int vision { get; set; }
-    public override void Move()
-    {
 
-    }
-    //public Fish(int bSpeed, int Vision):base(bSpeed) { vision = Vision; }
-}
-class EnemyFish:Fish
+public class Enemy :Fish
 {
-    
+    Enemy() : base()
+    {
+        enemySpeed = fishSpeed;
+    }
+    public Transform[] points;
+    int current;
+    float enemySpeed;
+    int colliderCounter = 0;
+
     public int attackRange { get; set; }
-    public override void Move()
-    {
-        //Debug.Log(baseSpeed);
-        Debug.Log(vision);
-        Debug.Log(attackRange);
-        
-    }
-    //public EnemyFish(int baseSpeed,int vision, int ARange):base(baseSpeed,vision) { attackRange = ARange;}
-}
 
-public class Enemy : MonoBehaviour
-{   
-    public GameObject SphereVision;
-    
+    Quaternion targetRotation;
+
     void Start()
     {
-        //EnemyFish f1 = new EnemyFish(1, 2, 3);
-
-        //f1.Move();
-
+        current = 0; 
     }
 
-    
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (colliderCounter == 0)
+        {
+            Move(); 
+        }
+    }
+
+    public override void Move()
+    {
+        if (transform.position != points[current].position)
+        {
+            targetRotation = Quaternion.LookRotation(points[current].position - transform.position) * Quaternion.Euler(0f, 90f, 0f);
+            transform.position = Vector3.MoveTowards(transform.position, points[current].position, enemySpeed * Time.deltaTime);
+        }
+        else
+        {
+            current = (current + 1) % points.Length;
+        }
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 14f);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            colliderCounter += 1;
+
+            if (colliderCounter == 2)
+            {
+                enemySpeed = 2.0f;
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            colliderCounter -= 1;
+
+            if (colliderCounter == 0)
+            {
+                enemySpeed = 4.0f;
+            }
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            transform.position = Vector3.MoveTowards(transform.position, other.transform.position, enemySpeed * Time.deltaTime * 0.1f);
+            transform.rotation = Quaternion.LookRotation(other.transform.position - transform.position) * Quaternion.Euler(0f, 90f, 0f);
+        }
     }
 }

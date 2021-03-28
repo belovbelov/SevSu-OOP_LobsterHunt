@@ -2,16 +2,16 @@
 
 public class Player : Creature
 {
-    public Player() : base()
+    Player() : base()
     {
-        speed = creatureSpeed;
+        playerSpeed = creatureSpeed;
     }
 
     #region Variables
 
     // Movement variables
     public CharacterController controller;
-    public float speed;
+    float playerSpeed;
     public float gravity = -19.62f;
     public Transform groundCheck;
     public float groundDistance = 0.21f;
@@ -61,6 +61,7 @@ public class Player : Creature
     {
         Move();
     }
+
     public override void Move()
     {
         //Axles
@@ -91,7 +92,7 @@ public class Player : Creature
             velocity.y = -2f;
         }
 
-        adjustedSpeed = speed;
+        adjustedSpeed = playerSpeed;
         if (isSprinting)
         {
             adjustedSpeed *= sprintModifier;
@@ -138,7 +139,7 @@ public class Player : Creature
             normalCam.fieldOfView = Mathf.Lerp(normalCam.fieldOfView, baseFOV, Time.deltaTime * 8f);
         }
         //Head Bob
-        if (!isGrounded)
+        if (!isGrounded && !isSwimming)
         {
             //airborne
             HeadBob(idleCounter, 0.015f, 0.015f);
@@ -164,8 +165,7 @@ public class Player : Creature
             //sprinting
             HeadBob(movementCounter, 0.025f, 0.025f);
             movementCounter += Time.deltaTime * 6.75f;
-            targetWeaponBobPosition.z -= 0.4f;
-            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 12f * 0.1f);
+            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 12f * 0.25f);
         }
     }
 
