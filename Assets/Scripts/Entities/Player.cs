@@ -143,28 +143,33 @@ public class Player : Creature
         {
             //airborne
             HeadBob(idleCounter, 0.015f, 0.015f);
-            idleCounter += 0;
+            idleCounter += Time.deltaTime * 0.5f;
+            if (isSprinting)
+            {
+                targetWeaponBobPosition.z -= 0.4f;
+            }
             weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 2f * 0.2f);
         }
-        else if (velocity.x == 0 && velocity.z == 0)
+        else if (velocity.x == 0 && velocity.z == 0 || isSwimming)
         {
             //idling
             HeadBob(idleCounter, 0.015f, 0.015f);
             idleCounter += Time.deltaTime;
-            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 1f * 0.2f);
+            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 2f * 0.1f);
         }
-        else if (!isSprinting && (velocity.x != 0 || velocity.z != 0))
+        else if (!isSwimming && !isSprinting && (velocity.x != 0 || velocity.z != 0))
         {
             //walking
             HeadBob(movementCounter, 0.015f, 0.015f);
             movementCounter += Time.deltaTime * 5f;
-            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 12f * 0.2f);
+            weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 12f * 0.15f);
         }
         else
         {
             //sprinting
-            HeadBob(movementCounter, 0.025f, 0.025f);
+            HeadBob(movementCounter, 0.02f, 0.02f);
             movementCounter += Time.deltaTime * 6.75f;
+            targetWeaponBobPosition.z -= 0.4f;
             weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 12f * 0.25f);
         }
     }

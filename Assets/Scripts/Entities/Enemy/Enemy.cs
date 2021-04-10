@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 
-public class Enemy :Fish
+public class Enemy : Fish
 {
     Enemy() : base()
     {
@@ -23,7 +21,7 @@ public class Enemy :Fish
     {
         if (colliderCounter == 0)
         {
-            Move(); 
+            Move();
         }
     }
 
@@ -49,7 +47,7 @@ public class Enemy :Fish
 
             if (colliderCounter == 2)
             {
-                enemySpeed = 2.0f;
+                //logic
             }
         }
     }
@@ -62,16 +60,16 @@ public class Enemy :Fish
 
             if (colliderCounter == 0)
             {
-                enemySpeed = 4.0f;
+                //logic
             }
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") && colliderCounter == 1)
         {
-            transform.position = Vector3.MoveTowards(transform.position, other.transform.position, enemySpeed * Time.deltaTime * 0.1f);
+            transform.position = Vector3.MoveTowards(transform.position, other.transform.position, enemySpeed * Time.deltaTime);
             targetRotation = Quaternion.LookRotation(other.transform.position - transform.position) * Quaternion.Euler(0f, 90f, 0f);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 14f);
         }
