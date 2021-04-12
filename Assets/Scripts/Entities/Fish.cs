@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fish : Creature
+namespace Assets.Scripts.Entities
 {
-    protected float fishSpeed;
-    protected Fish() : base()
+    public class Fish : Creature
     {
-        fishSpeed = creatureSpeed;
-    }
-    public int vision { get; set; }
+        protected float fishSpeed;
+        protected Fish() : base() => fishSpeed = creatureSpeed;
+        public int Vision { get; set; }
 
-    public override void Move()
-    {
+        public override void Move()
+        {
 
+        }
     }
 }

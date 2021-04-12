@@ -4,16 +4,12 @@ namespace Assets.Scripts.Entities
 {
     public class Player : Creature
     {
-        Player() : base()
-        {
-            playerSpeed = creatureSpeed;
-        }
+        Player() : base() => playerSpeed = creatureSpeed;
 
         #region Variables
-
         // Movement variables
         public CharacterController controller;
-        float playerSpeed;
+        private float playerSpeed;
         public float gravity = -19.62f;
         public Transform groundCheck;
         public float groundDistance = 0.21f;
@@ -35,6 +31,7 @@ namespace Assets.Scripts.Entities
         bool isArising;
         bool isCrouching;
         float adjustedSpeed;
+        public static bool isBreathing;
 
         //FOV
         public Transform weaponParent;
@@ -57,6 +54,8 @@ namespace Assets.Scripts.Entities
             baseFOV = normalCam.fieldOfView;
             weaponOrigin = weaponParent.transform.localPosition;
             weaponParentCurrentPos = weaponOrigin;
+
+            isBreathing = true;
         }
 
         void Update()
@@ -86,7 +85,7 @@ namespace Assets.Scripts.Entities
             isArising = jump && isSwimming;
             isCrouching = crouch && isSwimming && !isArising;
 
-
+            isBreathing = (1 - timeInWater / 20.0f) > 0;
 
             //Movement
             if (isGrounded && velocity.y < 0)
@@ -140,6 +139,7 @@ namespace Assets.Scripts.Entities
             {
                 normalCam.fieldOfView = Mathf.Lerp(normalCam.fieldOfView, baseFOV, Time.deltaTime * 8f);
             }
+
             //Head Bob
             if (!isGrounded && !isSwimming)
             {
@@ -181,5 +181,6 @@ namespace Assets.Scripts.Entities
             float t_aim_adjust = 1f;
             targetWeaponBobPosition = weaponParentCurrentPos + new Vector3(Mathf.Cos(p_z) * p_x_intensity * t_aim_adjust, Mathf.Sin(p_z * 2) * p_y_intensity * t_aim_adjust, 0);
         }
+
     }
 }

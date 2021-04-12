@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace weapon {
+namespace Assets.Scripts.ScriptableObjetsGenerator
+{
     [CreateAssetMenu(fileName = "New Gun", menuName = "Gun")]
 
-    public class Gun : ScriptableObject {
+    public class Gun : ScriptableObject
+    {
         public string gunName;
         public GameObject prefab;
         public float damage;

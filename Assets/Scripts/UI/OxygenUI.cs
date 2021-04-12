@@ -13,7 +13,6 @@ namespace Assets.Scripts.UI
         public Player player;
 
         public float FillSpeed { get; set; } = 0.5f;
-        private float targetProgress = 1.0f;
 
         private void Awake()
         {
@@ -22,7 +21,7 @@ namespace Assets.Scripts.UI
 
         private void Update()
         {
-            slider.value = 1 - player.timeInWater / 60.0f;
+            slider.value = 1 - player.timeInWater / 20.0f;
         }
     }
 }

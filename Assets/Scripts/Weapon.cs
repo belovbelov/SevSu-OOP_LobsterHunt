@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Assets.Scripts.ScriptableObjetsGenerator;
+using Assets.Scripts.UI;
 
-namespace weapon
+namespace Assets.Scripts
 {
     public class Weapon : MonoBehaviour
     {
@@ -19,20 +21,18 @@ namespace weapon
         {
             if (currentWeapon != null)
             {
-                if (Input.GetButtonDown("Fire1"))
+                if (!InGameMenu.GameIsPaused)
                 {
-                    Shoot();
+                    if (Input.GetButtonDown("Fire1"))
+                    {
+                        Shoot();
+                    }
+                    currentWeapon.transform.localPosition = Vector3.Lerp(currentWeapon.transform.localPosition, Vector3.zero, Time.deltaTime * 5f);
                 }
-                currentWeapon.transform.localPosition = Vector3.Lerp(currentWeapon.transform.localPosition, Vector3.zero, Time.deltaTime * 5f);
             }
-
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 Equip(0);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                Equip(1);
             }
         }
         #region Private methods
