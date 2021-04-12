@@ -64,11 +64,12 @@
     <Compile Include="Assets\Scripts\Entities\Fish.cs" />
     <Compile Include="Assets\Scripts\Entities\Creature.cs" />
     <Compile Include="Assets\Scripts\Entities\Player.cs" />
+    <Compile Include="Assets\Scripts\UI\MainMenuUI.cs" />
+    <Compile Include="Assets\Scripts\UI\InGameMenu.cs" />
     <Compile Include="Assets\Scripts\MouseLook.cs" />
     <Compile Include="Assets\Scripts\Entities\Enemy\Enemy.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjetsGenerator\Gun.cs" />
-    <Compile Include="Assets\Scripts\UI\MainMenuUI.cs" />
-    <Compile Include="Assets\Scripts\UI\InGameMenu.cs" />
+    <Compile Include="Assets\Scripts\MainMenuCamera.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

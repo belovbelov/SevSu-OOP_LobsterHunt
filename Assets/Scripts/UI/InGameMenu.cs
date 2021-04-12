@@ -18,11 +18,6 @@ namespace Assets.Scripts.UI
 
         public GameObject gameOverScreen;
 
-        public void Start()
-        {
-            Time.timeScale = 1f;
-            GameIsPaused = false;
-        }
         public void Update()
         {
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -40,6 +35,12 @@ namespace Assets.Scripts.UI
             {
                 ShowGameOverScreen();
             }
+        }
+
+        public void OnDestroy()
+        {
+            Time.timeScale = 1f;
+            GameIsPaused = false;
         }
 
         public void Resume()
