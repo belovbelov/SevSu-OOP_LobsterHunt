@@ -31,6 +31,7 @@ namespace Assets.Scripts.UI
                     Pause();
                 }
             }
+
             if (!Player.isBreathing)
             {
                 ShowGameOverScreen();
