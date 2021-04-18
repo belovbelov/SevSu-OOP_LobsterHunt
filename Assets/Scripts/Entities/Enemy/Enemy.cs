@@ -1,78 +1,72 @@
-﻿using Assets.Scripts.Entities;
-using UnityEngine;
+﻿using UnityEngine;
 
-
-
-public class Enemy : Fish
+namespace Assets.Scripts.Entities.Enemy
 {
-    Enemy() : base()
+    public class Enemy : Fish
     {
-        enemySpeed = fishSpeed;
-    }
-    public Transform[] points;
-    int current = 0;
-    float enemySpeed;
-    int colliderCounter = 0;
-
-    public int attackRange { get; set; }
-
-    Quaternion targetRotation;
-
-    private void Update()
-    {
-        if (colliderCounter == 0)
+        Enemy() : base()
         {
+
+        }
+
+        int current = 0;
+        int colliderCounter = 0;
+        public float dist;
+
+        public int attackRange { get; set; }
+
+        private void Start()
+        {
+            cachedTransform = transform;
+            position = cachedTransform.position;
+            forward = cachedTransform.forward;
+            float startSpeed = (minSpeed + maxSpeed) / 2;
+            velocity = transform.forward * startSpeed;
+            target = points[current];
+        }
+        private void Update()
+        {
+            //if (colliderCounter == 0)
+            // {
             Move();
+            // }
         }
-    }
 
-    public override void Move()
-    {
-        if (transform.position != points[current].position)
+        private void OnTriggerEnter(Collider other)
         {
-            targetRotation = Quaternion.LookRotation(points[current].position - transform.position) * Quaternion.Euler(0f, 90f, 0f);
-            transform.position = Vector3.MoveTowards(transform.position, points[current].position, enemySpeed * Time.deltaTime);
-        }
-        else
-        {
-            current = (current + 1) % points.Length;
-        }
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 14f);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            colliderCounter += 1;
-
-            if (colliderCounter == 2)
+            if (other.gameObject.CompareTag("Player"))
             {
-                //logic
+                colliderCounter += 1;
+                target = other.gameObject.transform;
+                if (colliderCounter == 2)
+                {
+                    Debug.Log("Molodec!!!");
+                }
             }
         }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
+        private void OnTriggerExit(Collider other)
         {
-            colliderCounter -= 1;
-
-            if (colliderCounter == 0)
+            if (other.gameObject.CompareTag("Player"))
             {
-                //logic
+                colliderCounter -= 1;
+                if (colliderCounter == 0)
+                {
+                target = points[current];
+                }
             }
         }
-    }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player") && colliderCounter == 1)
+        public override void Move()
         {
-            transform.position = Vector3.MoveTowards(transform.position, other.transform.position, enemySpeed * Time.deltaTime);
-            targetRotation = Quaternion.LookRotation(other.transform.position - transform.position) * Quaternion.Euler(0f, 90f, 0f);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 14f);
+            base.Move();
+            dist = Vector3.Distance(transform.position, points[current].position);
+            transform.rotation *= Quaternion.Euler(0f, 90f, 0f);
+            if (dist < 5)
+            {
+                current = (current + 1) % points.Length;
+                target = points[current];
+            }
         }
     }
 }

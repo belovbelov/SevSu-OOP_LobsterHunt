@@ -10,15 +10,15 @@ namespace Assets.Scripts
         public float health = 50f;
         #endregion
         #region Private methods
-        public void takeDamage(float amountDamage)
+        public void TakeDamage(float amountDamage)
         {
             health -= amountDamage;
             if (health <= 0f)
             {
-                die();
+                Die();
             }
         }
-        void die()
+        void Die()
         {
             //Дописать скрипт начисления очков+смерти объекта
             Destroy(gameObject);

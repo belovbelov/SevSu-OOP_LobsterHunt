@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts.ScriptableObjetsGenerator;
 using Assets.Scripts.UI;
+using Assets.Scripts.Entities;
 
 namespace Assets.Scripts
 {
@@ -40,10 +41,10 @@ namespace Assets.Scripts
         {
             if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out RaycastHit hit, loadout[currentIndex].range))
             {
-                Target target = hit.transform.GetComponent<Target>();
-                if (target != null)
+                Fish target = hit.transform.GetComponent<Fish>();
+                if (target != null && target.inRange)
                 {
-                    target.takeDamage(loadout[currentIndex].damage);
+                    target.TakeDamage(loadout[currentIndex].damage);
                 }
             }
 
