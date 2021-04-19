@@ -32,7 +32,7 @@ namespace Assets.Scripts.Entities
         bool isCrouching;
         float adjustedSpeed;
         public static bool isBreathing;
-
+        public static bool isDead;
         //FOV
         public Transform weaponParent;
         public Camera normalCam;
@@ -56,6 +56,7 @@ namespace Assets.Scripts.Entities
             weaponParentCurrentPos = weaponOrigin;
 
             isBreathing = true;
+            isDead = false;
         }
 
         void Update()

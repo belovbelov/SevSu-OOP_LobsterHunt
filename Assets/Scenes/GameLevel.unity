@@ -15,9 +15,9 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 0
-  m_FogColor: {r: 0.07929868, g: 0.38564616, b: 0.6226415, a: 0.5529412}
-  m_FogMode: 3
-  m_FogDensity: 0.02
+  m_FogColor: {r: 0.43827873, g: 0.5178738, b: 0.6320754, a: 0.5529412}
+  m_FogMode: 2
+  m_FogDensity: 0.1
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.2264151, g: 0.22038752, b: 0.21893913, a: 1}
@@ -912,7 +912,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &390172075
 Transform:
   m_ObjectHideFlags: 0
@@ -927,7 +927,7 @@ Transform:
   - {fileID: 555319441}
   - {fileID: 122898879}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &418603862
 GameObject:
@@ -1116,7 +1116,7 @@ Transform:
   - {fileID: 1499754476}
   - {fileID: 376405485}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &551893242
 GameObject:
@@ -1150,7 +1150,7 @@ Transform:
   - {fileID: 1729096293}
   - {fileID: 664515510}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &554850811
 GameObject:
@@ -2345,7 +2345,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2d866286aabd844a493d547d6c3b7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 50
 --- !u!136 &1183653526
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2498,7 +2497,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3010,7 +3009,7 @@ Transform:
   m_GameObject: {fileID: 1482600968}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1836556781}
   m_RootOrder: 0
@@ -3203,7 +3202,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1627300366
 GameObject:
@@ -3707,6 +3706,7 @@ GameObject:
   - component: {fileID: 1836556780}
   - component: {fileID: 1836556778}
   - component: {fileID: 1836556782}
+  - component: {fileID: 1836556779}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -3730,6 +3730,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c3018356246ac014f80f0c69f8596c12, type: 2}
   weaponParent: {fileID: 1926127756}
   fpsCam: {fileID: 225713004}
+--- !u!114 &1836556779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836556777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82a90483d103b446bfc12c3db738080, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waterPlane: {fileID: 702548476}
+  density: 0.075
 --- !u!143 &1836556780
 CharacterController:
   m_ObjectHideFlags: 0
@@ -4470,7 +4484,7 @@ Transform:
   - {fileID: 383147538}
   - {fileID: 1983802318}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2035239109
 PrefabInstance:

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Assets.Scripts.Entities;
 
 namespace Assets.Scripts.Entities.Enemy
 {
@@ -40,7 +41,8 @@ namespace Assets.Scripts.Entities.Enemy
                 target = other.gameObject.transform;
                 if (colliderCounter == 2)
                 {
-                    Debug.Log("Molodec!!!");
+                    Player.isDead = true;
+
                 }
             }
         }

@@ -32,7 +32,7 @@ namespace Assets.Scripts.UI
                 }
             }
 
-            if (!Player.isBreathing)
+            if (!Player.isBreathing || Player.isDead)
             {
                 ShowGameOverScreen();
             }
