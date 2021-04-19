@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts
 {
@@ -12,9 +13,7 @@ namespace Assets.Scripts
         float mouseX;
         float mouseY;
 
-
         #endregion
-
         void Start()
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -32,6 +31,5 @@ namespace Assets.Scripts
             transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
             playerBody.Rotate(Vector3.up * mouseX);
         }
-
     }
 }

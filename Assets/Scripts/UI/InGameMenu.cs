@@ -19,7 +19,6 @@ namespace Assets.Scripts.UI
         private void Start()
         {
                 fishCount = GameObject.FindGameObjectsWithTag("Fish");
-                Debug.Log(fishCount);
         }
 
         public void Update()
@@ -85,6 +84,7 @@ namespace Assets.Scripts.UI
             gameOverScreen.SetActive(true);
             Time.timeScale = 0f;
             Cursor.lockState = CursorLockMode.None;
+            GameIsPaused = true;
         }
 
         public void RestartGame()
@@ -100,6 +100,7 @@ namespace Assets.Scripts.UI
             winScreen.SetActive(true);
             Time.timeScale = 0f;
             Cursor.lockState = CursorLockMode.None;
+            GameIsPaused = true;
         }
     }
 }

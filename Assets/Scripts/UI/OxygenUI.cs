@@ -12,8 +12,6 @@ namespace Assets.Scripts.UI
         private Slider slider;
         public Player player;
 
-        public float FillSpeed { get; set; } = 0.5f;
-
         private void Awake()
         {
             slider = GetComponent<Slider>();
