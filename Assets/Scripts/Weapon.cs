@@ -10,14 +10,17 @@ namespace Assets.Scripts
     public class Weapon : MonoBehaviour
     {
         #region Variables
-
+        public static int fishKilled;
         public Gun[] loadout;
         public Transform weaponParent;
         public Camera fpsCam;
         GameObject currentWeapon;
         int currentIndex;
         #endregion
-
+        private void Start()
+        {
+            fishKilled = 0;
+        }
         private void Update()
         {
             if (currentWeapon != null)

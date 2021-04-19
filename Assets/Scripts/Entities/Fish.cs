@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using Assets.Scripts;
 namespace Assets.Scripts.Entities
 {
     public class Fish : Creature
@@ -148,6 +148,7 @@ namespace Assets.Scripts.Entities
         void Die()
         {
             //Дописать скрипт начисления очков+смерти объекта
+            Weapon.fishKilled += 1;
             Destroy(gameObject);
         }
 

@@ -1,22 +1,26 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using Assets.Scripts.Entities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
-using Assets.Scripts.Entities;
 
 
 namespace Assets.Scripts.UI
 {
     public class InGameMenu : MonoBehaviour
     {
+        public GameObject[] fishCount;
         public static bool GameIsPaused;
-
 
         public GameObject pauseMenu;
 
         public GameObject gameOverScreen;
+
+        public GameObject winScreen;
+
+        private void Start()
+        {
+                fishCount = GameObject.FindGameObjectsWithTag("Fish");
+                Debug.Log(fishCount);
+        }
 
         public void Update()
         {
@@ -35,6 +39,11 @@ namespace Assets.Scripts.UI
             if (!Player.isBreathing || Player.isDead)
             {
                 ShowGameOverScreen();
+            }
+
+            if (fishCount.Length == Weapon.fishKilled)
+            {
+                WinScreen();
             }
         }
 
@@ -83,6 +92,14 @@ namespace Assets.Scripts.UI
             gameOverScreen.SetActive(false);
             GameIsPaused = false;
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+        public void WinScreen()
+        {
+            pauseMenu.SetActive(false);
+            winScreen.SetActive(true);
+            Time.timeScale = 0f;
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 }
