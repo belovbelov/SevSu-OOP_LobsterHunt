@@ -14,7 +14,7 @@ namespace Assets.Scripts.Entities
 
         protected float fishSpeed;
 
-        public float minSpeed = 2;
+        public float minSpeed = 2; 
         public float maxSpeed = 5;
         public float maxSteerForce = 3;
         public float targetWeight = 1;

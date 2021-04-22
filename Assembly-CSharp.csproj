@@ -58,12 +58,12 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Weapon.cs" />
     <Compile Include="Assets\Scripts\BOIDS\BoidHelper.cs" />
-    <Compile Include="Assets\Scripts\Entities\Enemy\EnemyVision.cs" />
     <Compile Include="Assets\Scripts\UI\OxygenUI.cs" />
     <Compile Include="Assets\Scripts\Entities\Fish.cs" />
     <Compile Include="Assets\Scripts\BOIDS\Boid.cs" />
     <Compile Include="Assets\Scripts\Entities\Creature.cs" />
     <Compile Include="Assets\Scripts\Entities\Player.cs" />
+    <Compile Include="Assets\Scripts\UnderwaterFog.cs" />
     <Compile Include="Assets\Scripts\UI\MainMenuUI.cs" />
     <Compile Include="Assets\Scripts\BOIDS\BoidSettings.cs" />
     <Compile Include="Assets\Scripts\UI\InGameMenu.cs" />
@@ -73,7 +73,6 @@
     <Compile Include="Assets\Scripts\Entities\Enemy\Enemy.cs" />
     <Compile Include="Assets\Scripts\MainMenuCamera.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjetsGenerator\Gun.cs" />
-    <Compile Include="Assets\Scripts\UnderwaterFog.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

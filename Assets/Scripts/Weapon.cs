@@ -20,6 +20,7 @@ namespace Assets.Scripts
         private void Start()
         {
             fishKilled = 0;
+            Equip(0);
         }
         private void Update()
         {

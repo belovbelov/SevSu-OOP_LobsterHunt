@@ -14,8 +14,6 @@ namespace Assets.Scripts.Entities.Enemy
         int colliderCounter = 0;
         public float dist;
 
-        public int attackRange { get; set; }
-
         private void Start()
         {
             cachedTransform = transform;
@@ -54,7 +52,7 @@ namespace Assets.Scripts.Entities.Enemy
                 colliderCounter -= 1;
                 if (colliderCounter == 0)
                 {
-                target = points[current];
+                    target = points[current];
                 }
             }
         }

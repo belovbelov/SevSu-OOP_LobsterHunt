@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-
+﻿using Assets.Scripts.UI;
+using UnityEngine;
 namespace Assets.Scripts.Entities
 {
     public class Player : Creature
@@ -22,7 +22,9 @@ namespace Assets.Scripts.Entities
         bool sprint;
         bool jump;
         bool crouch;
-        public float timeInWater = 0.0f;
+        public float timeInWater;
+
+        public OxygenUI slider;
 
         // States
         bool isGrounded;
@@ -86,7 +88,8 @@ namespace Assets.Scripts.Entities
             isArising = jump && isSwimming;
             isCrouching = crouch && isSwimming && !isArising;
 
-            isBreathing = (1 - timeInWater / 20.0f) > 0;
+            isBreathing = (1 - timeInWater / 30.0f) > 0;
+            slider.SetSlider(1 - timeInWater / 30.0f);
 
             //Movement
             if (isGrounded && velocity.y < 0)
