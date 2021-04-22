@@ -1,25 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using Assets.Scripts.Entities;
 using Assets.Scripts.ScriptableObjetsGenerator;
 using Assets.Scripts.UI;
-using Assets.Scripts.Entities;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
     public class Weapon : MonoBehaviour
     {
         #region Variables
-        public static int fishKilled;
-        public Gun[] loadout;
-        public Transform weaponParent;
-        public Camera fpsCam;
-        GameObject currentWeapon;
-        int currentIndex;
+        public static int FishKilled;
+        public Gun[] Loadout;
+        public Transform WeaponParent;
+        public Camera FpsCam;
+        private GameObject currentWeapon;
+        private int currentIndex;
         #endregion
         private void Start()
         {
-            fishKilled = 0;
+            FishKilled = 0;
             Equip(0);
         }
         private void Update()
@@ -43,29 +41,29 @@ namespace Assets.Scripts
         #region Private methods
         void Shoot()
         {
-            if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out RaycastHit hit, loadout[currentIndex].range))
+            if (Physics.Raycast(FpsCam.transform.position, FpsCam.transform.forward, out RaycastHit hit, Loadout[currentIndex].range))
             {
                 Fish target = hit.transform.GetComponent<Fish>();
-                if (target != null && target.inRange)
+                if (target != null && target.InRange)
                 {
-                    target.TakeDamage(loadout[currentIndex].damage);
+                    target.TakeDamage(Loadout[currentIndex].damage);
                 }
             }
 
             //Weapon FX
-            currentWeapon.transform.position += currentWeapon.transform.forward * loadout[currentIndex].kickback;
+            currentWeapon.transform.position += currentWeapon.transform.forward * Loadout[currentIndex].kickback;
         }
 
-        private void Equip(int p_ind)
+        private void Equip(int pInd)
         {
             if (currentWeapon != null)
             {
                 Destroy(currentWeapon);
             }
 
-            currentIndex = p_ind;
+            currentIndex = pInd;
 
-            GameObject newWeapon = Instantiate(loadout[p_ind].prefab, weaponParent.position, weaponParent.rotation, weaponParent) as GameObject;
+            GameObject newWeapon = Instantiate(Loadout[pInd].prefab, WeaponParent.position, WeaponParent.rotation, WeaponParent) as GameObject;
             newWeapon.transform.localPosition = Vector3.zero;
             currentWeapon = newWeapon;
         }

@@ -1,27 +1,27 @@
 ﻿using UnityEngine;
-using Assets.Scripts.Entities;
 
-namespace Assets.Scripts.Entities.Enemy
+namespace Assets.Scripts.Entities
 {
     public class Enemy : Fish
     {
-        Enemy() : base()
+
+        private int current;
+        private int colliderCounter;
+        public float Dist;
+        private float enemySpeed;
+
+        Enemy()
         {
-
+            enemySpeed = CreatureSpeed;
         }
-
-        int current = 0;
-        int colliderCounter = 0;
-        public float dist;
-
         private void Start()
         {
-            cachedTransform = transform;
-            position = cachedTransform.position;
-            forward = cachedTransform.forward;
-            float startSpeed = (minSpeed + maxSpeed) / 2;
-            velocity = transform.forward * startSpeed;
-            target = points[current];
+            CachedTransform = transform;
+            Position = CachedTransform.position;
+            Forward = CachedTransform.forward;
+            float startSpeed = (MinSpeed + MaxSpeed) / 2;
+            Velocity = transform.forward * startSpeed;
+            Target = Points[current];
         }
         private void Update()
         {
@@ -36,10 +36,10 @@ namespace Assets.Scripts.Entities.Enemy
             if (other.gameObject.CompareTag("Player"))
             {
                 colliderCounter += 1;
-                target = other.gameObject.transform;
+                Target = other.gameObject.transform;
                 if (colliderCounter == 2)
                 {
-                    Player.isDead = true;
+                    Player.IsDead = true;
 
                 }
             }
@@ -52,7 +52,7 @@ namespace Assets.Scripts.Entities.Enemy
                 colliderCounter -= 1;
                 if (colliderCounter == 0)
                 {
-                    target = points[current];
+                    Target = Points[current];
                 }
             }
         }
@@ -60,12 +60,12 @@ namespace Assets.Scripts.Entities.Enemy
         public override void Move()
         {
             base.Move();
-            dist = Vector3.Distance(transform.position, points[current].position);
+            Dist = Vector3.Distance(transform.position, Points[current].position);
             transform.rotation *= Quaternion.Euler(0f, 90f, 0f);
-            if (dist < 5)
+            if (Dist < 5)
             {
-                current = (current + 1) % points.Length;
-                target = points[current];
+                current = (current + 1) % Points.Length;
+                Target = Points[current];
             }
         }
     }

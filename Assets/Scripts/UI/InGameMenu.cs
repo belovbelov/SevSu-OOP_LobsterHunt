@@ -7,18 +7,18 @@ namespace Assets.Scripts.UI
 {
     public class InGameMenu : MonoBehaviour
     {
-        public GameObject[] fishCount;
+        public GameObject[] FishCount;
         public static bool GameIsPaused;
 
-        public GameObject pauseMenu;
+        public GameObject PauseMenu;
 
-        public GameObject gameOverScreen;
+        public GameObject GameOverScreen;
 
-        public GameObject winScreen;
+        public GameObject WinScreen;
 
         private void Start()
         {
-                fishCount = GameObject.FindGameObjectsWithTag("Fish");
+            FishCount = GameObject.FindGameObjectsWithTag("Fish");
         }
 
         public void Update()
@@ -35,14 +35,14 @@ namespace Assets.Scripts.UI
                 }
             }
 
-            if (!Player.isBreathing || Player.isDead)
+            if (!Player.IsBreathing || Player.IsDead)
             {
                 ShowGameOverScreen();
             }
 
-            if (fishCount.Length == Weapon.fishKilled)
+            if (FishCount.Length == Weapon.FishKilled)
             {
-                WinScreen();
+                ShowWinScreen();
             }
         }
 
@@ -54,7 +54,7 @@ namespace Assets.Scripts.UI
 
         public void Resume()
         {
-            pauseMenu.SetActive(false);
+            PauseMenu.SetActive(false);
             Time.timeScale = 1f;
             GameIsPaused = false;
             Cursor.lockState = CursorLockMode.Locked;
@@ -62,7 +62,7 @@ namespace Assets.Scripts.UI
 
         private void Pause()
         {
-            pauseMenu.SetActive(true);
+            PauseMenu.SetActive(true);
             Time.timeScale = 0f;
             GameIsPaused = true;
             Cursor.lockState = CursorLockMode.None;
@@ -80,8 +80,8 @@ namespace Assets.Scripts.UI
 
         public void ShowGameOverScreen()
         {
-            pauseMenu.SetActive(false);
-            gameOverScreen.SetActive(true);
+            PauseMenu.SetActive(false);
+            GameOverScreen.SetActive(true);
             Time.timeScale = 0f;
             Cursor.lockState = CursorLockMode.None;
             GameIsPaused = true;
@@ -89,15 +89,15 @@ namespace Assets.Scripts.UI
 
         public void RestartGame()
         {
-            gameOverScreen.SetActive(false);
+            GameOverScreen.SetActive(false);
             GameIsPaused = false;
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
-        public void WinScreen()
+        public void ShowWinScreen()
         {
-            pauseMenu.SetActive(false);
-            winScreen.SetActive(true);
+            PauseMenu.SetActive(false);
+            WinScreen.SetActive(true);
             Time.timeScale = 0f;
             Cursor.lockState = CursorLockMode.None;
             GameIsPaused = true;

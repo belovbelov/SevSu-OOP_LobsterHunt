@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 namespace Assets.Scripts
 {
@@ -9,18 +8,19 @@ namespace Assets.Scripts
 
         public float mouseSensetivity = 400f;
         public Transform playerBody;
-        float xRotation = 0f;
+        float xRotation;
         float mouseX;
         float mouseY;
 
         #endregion
-        void Start()
+
+        private void Start()
         {
             Cursor.lockState = CursorLockMode.Locked;
         }
 
 
-        void Update()
+        private void Update()
         {
             mouseX = Input.GetAxis("Mouse X") * mouseSensetivity * Time.deltaTime;
             mouseY = Input.GetAxis("Mouse Y") * mouseSensetivity * Time.deltaTime;

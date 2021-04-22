@@ -1,44 +1,45 @@
-﻿using UnityEngine;
-using Assets.Scripts;
+﻿using Assets.Scripts.BOIDS;
+using UnityEngine;
+
 namespace Assets.Scripts.Entities
 {
     public class Fish : Creature
     {
-        public float health = 50f;
-        public bool inRange = false;
-        protected Vector3 position;
-        protected Vector3 forward;
-        protected Vector3 velocity;
-        public Transform target;
-        public Transform cachedTransform;
+        public float Health = 50f;
+        public bool InRange;
+        protected Vector3 Position;
+        protected Vector3 Forward;
+        protected Vector3 Velocity;
+        public Transform Target;
+        public Transform CachedTransform;
 
-        protected float fishSpeed;
+        protected float FishSpeed;
 
-        public float minSpeed = 2; 
-        public float maxSpeed = 5;
-        public float maxSteerForce = 3;
-        public float targetWeight = 1;
+        public float MinSpeed = 2;
+        public float MaxSteerForce = 3;
+        public float MaxSpeed = 5;
+        public float TargetWeight = 1;
 
-        public LayerMask obstacleMask;
-        public float boundsRadius = .27f;
-        public float avoidCollisionWeight = 10;
-        public float collisionAvoidDst = 5;
+        public LayerMask ObstacleMask;
+        public float BoundsRadius = .27f;
+        public float AvoidCollisionWeight = 10;
+        public float CollisionAvoidDst = 5;
 
-        public Transform[] points;
+        public Transform[] Points;
 
-        protected Fish() : base()
+        protected Fish()
         {
-            fishSpeed = creatureSpeed;
+            FishSpeed = CreatureSpeed;
         }
 
         private void Start()
         {
-            cachedTransform = transform;
-            position = cachedTransform.position;
-            forward = cachedTransform.forward;
-            float startSpeed = (minSpeed + maxSpeed) / 2;
-            velocity = transform.forward * startSpeed;
-            target = null;
+            CachedTransform = transform;
+            Position = CachedTransform.position;
+            Forward = CachedTransform.forward;
+            float startSpeed = (MinSpeed + MaxSpeed) / 2;
+            Velocity = transform.forward * startSpeed;
+            Target = null;
         }
 
         private void Update()
@@ -50,21 +51,21 @@ namespace Assets.Scripts.Entities
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                inRange = true;
+                InRange = true;
                 float PlayerDist,FishDist;
                 float maxdist = 0;
                 int idist = 0;
-                for (int i = 0; i < points.Length; i++)
+                for (int i = 0; i < Points.Length; i++)
                 {
-                    PlayerDist = Vector3.Distance(other.gameObject.transform.position, points[i].position);
-                    FishDist = Vector3.Distance(transform.position, points[i].position);
+                    PlayerDist = Vector3.Distance(other.gameObject.transform.position, Points[i].position);
+                    FishDist = Vector3.Distance(transform.position, Points[i].position);
                     if (PlayerDist - FishDist > maxdist)
                     {
                         maxdist = PlayerDist - FishDist;
                         idist = i;
                     }
                 }
-                target = points[idist];
+                Target = Points[idist];
             }
         }
 
@@ -72,8 +73,8 @@ namespace Assets.Scripts.Entities
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                inRange = false;
-                target = null;
+                InRange = false;
+                Target = null;
             }
         }
 
@@ -81,39 +82,39 @@ namespace Assets.Scripts.Entities
         {
             Vector3 acceleration = Vector3.zero;
 
-            if (target != null)
+            if (Target != null)
             {
-                Vector3 offsetToTarget = target.position - position;
-                acceleration = SteerTowards(offsetToTarget) * targetWeight;
+                Vector3 offsetToTarget = Target.position - Position;
+                acceleration = SteerTowards(offsetToTarget) * TargetWeight;
             }
             if (IsHeadingForCollision())
             {
                 Vector3 collisionAvoidDir = ObstacleRays();
-                Vector3 collisionAvoidForce = SteerTowards(collisionAvoidDir) * avoidCollisionWeight;
+                Vector3 collisionAvoidForce = SteerTowards(collisionAvoidDir) * AvoidCollisionWeight;
                 acceleration += collisionAvoidForce;
             }
-            velocity += acceleration * Time.deltaTime;
-            float speed = velocity.magnitude;
-            Vector3 dir = velocity / speed;
-            speed = Mathf.Clamp(speed, minSpeed, maxSpeed);
-            velocity = dir * speed;
+            Velocity += acceleration * Time.deltaTime;
+            float speed = Velocity.magnitude;
+            Vector3 dir = Velocity / speed;
+            speed = Mathf.Clamp(speed, MinSpeed, MaxSpeed);
+            Velocity = dir * speed;
 
-            cachedTransform.position += velocity * Time.deltaTime;
-            cachedTransform.forward = dir;
-            position = cachedTransform.position;
-            forward = dir;
+            CachedTransform.position += Velocity * Time.deltaTime;
+            CachedTransform.forward = dir;
+            Position = CachedTransform.position;
+            Forward = dir;
         }
 
         Vector3 SteerTowards(Vector3 vector)
         {
-            Vector3 v = vector.normalized * maxSpeed - velocity;
-            return Vector3.ClampMagnitude(v, maxSteerForce);
+            Vector3 v = vector.normalized * MaxSpeed - Velocity;
+            return Vector3.ClampMagnitude(v, MaxSteerForce);
         }
 
         bool IsHeadingForCollision()
         {
             RaycastHit hit;
-            if (Physics.SphereCast(position, boundsRadius, forward, out hit, collisionAvoidDst, obstacleMask))
+            if (Physics.SphereCast(Position, BoundsRadius, Forward, out hit, CollisionAvoidDst, ObstacleMask))
             {
                 return true;
             }
@@ -123,24 +124,24 @@ namespace Assets.Scripts.Entities
 
         Vector3 ObstacleRays()
         {
-            Vector3[] rayDirections = BoidHelper.directions;
+            Vector3[] rayDirections = BoidHelper.Directions;
 
             for (int i = 0; i < rayDirections.Length; i++)
             {
-                Vector3 dir = cachedTransform.TransformDirection(rayDirections[i]);
-                Ray ray = new Ray(position, dir);
-                if (!Physics.SphereCast(ray, boundsRadius, collisionAvoidDst, obstacleMask))
+                Vector3 dir = CachedTransform.TransformDirection(rayDirections[i]);
+                Ray ray = new Ray(Position, dir);
+                if (!Physics.SphereCast(ray, BoundsRadius, CollisionAvoidDst, ObstacleMask))
                 {
                     return dir;
                 }
             }
 
-            return forward;
+            return Forward;
         }
         public void TakeDamage(float amountDamage)
         {
-            health -= amountDamage;
-            if (health <= 0f)
+            Health -= amountDamage;
+            if (Health <= 0f)
             {
                 Die();
             }
@@ -148,7 +149,7 @@ namespace Assets.Scripts.Entities
         void Die()
         {
             //Дописать скрипт начисления очков+смерти объекта
-            Weapon.fishKilled += 1;
+            Weapon.FishKilled += 1;
             Destroy(gameObject);
         }
 

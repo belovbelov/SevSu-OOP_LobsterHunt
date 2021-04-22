@@ -1,46 +1,47 @@
 ﻿using Assets.Scripts.UI;
 using UnityEngine;
+
 namespace Assets.Scripts.Entities
 {
     public class Player : Creature
     {
-        Player() : base() => playerSpeed = creatureSpeed;
+        private Player() => playerSpeed = CreatureSpeed;
 
         #region Variables
         // Movement variables
-        public CharacterController controller;
+        public CharacterController Controller;
         private float playerSpeed;
-        public float gravity = -19.62f;
-        public Transform groundCheck;
-        public float groundDistance = 0.21f;
-        public LayerMask groundMask;
-        public float jumpHeight = 1f;
-        public float sprintModifier;
-        Vector3 velocity;
-        bool isSprinting;
-        public Transform waterCheck;
-        bool sprint;
-        bool jump;
-        bool crouch;
-        public float timeInWater;
+        public float Gravity = -19.62f;
+        public Transform GroundCheck;
+        public float GroundDistance = 0.21f;
+        public LayerMask GroundMask;
+        public float JumpHeight = 1f;
+        public float SprintModifier;
+        public Vector3 Velocity;
+        private bool isSprinting;
+        public Transform WaterCheck;
+        private bool sprint;
+        private bool jump;
+        private bool crouch;
+        public float TimeInWater;
 
-        public OxygenUI slider;
+        public OxygenUI Slider;
 
         // States
-        bool isGrounded;
-        bool isJumping;
-        bool isSwimming;
-        bool isArising;
-        bool isCrouching;
-        float adjustedSpeed;
-        public static bool isBreathing;
-        public static bool isDead;
+        private bool isGrounded;
+        private bool isJumping;
+        private bool isSwimming;
+        private bool isArising;
+        private bool isCrouching;
+        private float adjustedSpeed;
+        public static bool IsBreathing;
+        public static bool IsDead;
         //FOV
-        public Transform weaponParent;
-        public Camera normalCam;
-        float baseFOV;
-        float sprintFOVModifier = 1.25f;
-        Vector3 weaponOrigin;
+        public Transform WeaponParent;
+        public Camera NormalCam;
+        private float baseFov;
+        private const float SprintFovModifier = 1.25f;
+        private Vector3 weaponOrigin;
 
         //weaponBob
         private Vector3 weaponParentCurrentPos;
@@ -51,17 +52,17 @@ namespace Assets.Scripts.Entities
 
         #endregion
 
-        void Start()
+        private void Start()
         {
-            baseFOV = normalCam.fieldOfView;
-            weaponOrigin = weaponParent.transform.localPosition;
+            baseFov = NormalCam.fieldOfView;
+            weaponOrigin = WeaponParent.transform.localPosition;
             weaponParentCurrentPos = weaponOrigin;
 
-            isBreathing = true;
-            isDead = false;
+            IsBreathing = true;
+            IsDead = false;
         }
 
-        void Update()
+        private void Update()
         {
             Move();
         }
@@ -69,8 +70,8 @@ namespace Assets.Scripts.Entities
         public override void Move()
         {
             //Axles
-            velocity.x = Input.GetAxis("Horizontal");
-            velocity.z = Input.GetAxis("Vertical");
+            Velocity.x = Input.GetAxis("Horizontal");
+            Velocity.z = Input.GetAxis("Vertical");
 
 
             //Controls объявление переменных за update
@@ -80,68 +81,68 @@ namespace Assets.Scripts.Entities
 
 
             //States
-            isSprinting = sprint && velocity.z > 0;
-            isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+            isSprinting = sprint && Velocity.z > 0;
+            isGrounded = Physics.CheckSphere(GroundCheck.position, GroundDistance, GroundMask);
             isJumping = jump && isGrounded;
 
-            isSwimming = waterCheck.position.y > transform.position.y;
+            isSwimming = WaterCheck.position.y > transform.position.y;
             isArising = jump && isSwimming;
             isCrouching = crouch && isSwimming && !isArising;
 
-            isBreathing = (1 - timeInWater / 30.0f) > 0;
-            slider.SetSlider(1 - timeInWater / 30.0f);
+            IsBreathing = (1 - TimeInWater / 30.0f) > 0;
+            Slider.SetSlider(1 - TimeInWater / 30.0f);
 
             //Movement
-            if (isGrounded && velocity.y < 0)
+            if (isGrounded && Velocity.y < 0)
             {
-                velocity.y = -2f;
+                Velocity.y = -2f;
             }
 
             adjustedSpeed = playerSpeed;
             if (isSprinting)
             {
-                adjustedSpeed *= sprintModifier;
+                adjustedSpeed *= SprintModifier;
             }
-            Vector3 move = transform.right * velocity.x + transform.forward * velocity.z;
+            Vector3 move = transform.right * Velocity.x + transform.forward * Velocity.z;
             if (move.magnitude > 1)
             {
                 move.Normalize();
             }
-            controller.Move(move * adjustedSpeed * Time.deltaTime);
+            Controller.Move(move * adjustedSpeed * Time.deltaTime);
 
             if (isJumping)
             {
-                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                Velocity.y = Mathf.Sqrt(JumpHeight * -2f * Gravity);
             }
             if (isSwimming)
             {
-                timeInWater += Time.deltaTime;
-                velocity.y = Mathf.Lerp(velocity.y, -2.0f, Time.deltaTime * 6.0f);
-                if (isArising && timeInWater > 0.15f)
+                TimeInWater += Time.deltaTime;
+                Velocity.y = Mathf.Lerp(Velocity.y, -2.0f, Time.deltaTime * 6.0f);
+                if (isArising && TimeInWater > 0.15f)
                 {
-                    velocity.y = Mathf.Lerp(velocity.y, Mathf.Sqrt(-gravity * 2.0f), Time.deltaTime * 8.0f);
+                    Velocity.y = Mathf.Lerp(Velocity.y, Mathf.Sqrt(-Gravity * 2.0f), Time.deltaTime * 8.0f);
                 }
                 if (isCrouching)
                 {
-                    velocity.y = Mathf.Lerp(velocity.y, -Mathf.Sqrt(-gravity * 2.0f), Time.deltaTime * 8.0f);
+                    Velocity.y = Mathf.Lerp(Velocity.y, -Mathf.Sqrt(-Gravity * 2.0f), Time.deltaTime * 8.0f);
                 }
             }
             else
             {
-                timeInWater = 0.0f;
-                velocity.y += gravity * Time.deltaTime;
+                TimeInWater = 0.0f;
+                Velocity.y += Gravity * Time.deltaTime;
             }
-            controller.Move(velocity * Time.deltaTime);
+            Controller.Move(Velocity * Time.deltaTime);
 
 
             //FOV
             if (isSprinting)
             {
-                normalCam.fieldOfView = Mathf.Lerp(normalCam.fieldOfView, baseFOV * sprintFOVModifier, Time.deltaTime * 8f);
+                NormalCam.fieldOfView = Mathf.Lerp(NormalCam.fieldOfView, baseFov * SprintFovModifier, Time.deltaTime * 8f);
             }
             else
             {
-                normalCam.fieldOfView = Mathf.Lerp(normalCam.fieldOfView, baseFOV, Time.deltaTime * 8f);
+                NormalCam.fieldOfView = Mathf.Lerp(NormalCam.fieldOfView, baseFov, Time.deltaTime * 8f);
             }
 
             //Head Bob
@@ -154,21 +155,21 @@ namespace Assets.Scripts.Entities
                 {
                     targetWeaponBobPosition.z -= 0.4f;
                 }
-                weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 2f * 0.2f);
+                WeaponParent.localPosition = Vector3.MoveTowards(WeaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 2f * 0.2f);
             }
-            else if (velocity.x == 0 && velocity.z == 0 || isSwimming)
+            else if (Velocity.x == 0 && Velocity.z == 0 || isSwimming)
             {
                 //idling
                 HeadBob(idleCounter, 0.015f, 0.015f);
                 idleCounter += Time.deltaTime;
-                weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 2f * 0.1f);
+                WeaponParent.localPosition = Vector3.MoveTowards(WeaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 2f * 0.1f);
             }
-            else if (!isSwimming && !isSprinting && (velocity.x != 0 || velocity.z != 0))
+            else if (!isSwimming && !isSprinting && (Velocity.x != 0 || Velocity.z != 0))
             {
                 //walking
                 HeadBob(movementCounter, 0.015f, 0.015f);
                 movementCounter += Time.deltaTime * 5f;
-                weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 12f * 0.15f);
+                WeaponParent.localPosition = Vector3.MoveTowards(WeaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 12f * 0.15f);
             }
             else
             {
@@ -176,14 +177,14 @@ namespace Assets.Scripts.Entities
                 HeadBob(movementCounter, 0.02f, 0.02f);
                 movementCounter += Time.deltaTime * 6.75f;
                 targetWeaponBobPosition.z -= 0.2f;
-                weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 12f * 0.25f);
+                WeaponParent.localPosition = Vector3.MoveTowards(WeaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 12f * 0.25f);
             }
         }
 
-        void HeadBob(float p_z, float p_x_intensity, float p_y_intensity)
+        void HeadBob(float pZ, float pXIntensity, float pYIntensity)
         {
             float t_aim_adjust = 1f;
-            targetWeaponBobPosition = weaponParentCurrentPos + new Vector3(Mathf.Cos(p_z) * p_x_intensity * t_aim_adjust, Mathf.Sin(p_z * 2) * p_y_intensity * t_aim_adjust, 0);
+            targetWeaponBobPosition = weaponParentCurrentPos + new Vector3(Mathf.Cos(pZ) * pXIntensity * t_aim_adjust, Mathf.Sin(pZ * 2) * pYIntensity * t_aim_adjust, 0);
         }
 
     }

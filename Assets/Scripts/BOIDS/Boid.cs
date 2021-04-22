@@ -1,38 +1,35 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.BOIDS
 {
     public class Boid : MonoBehaviour
     {
-
-        BoidSettings settings;
+        private BoidSettings settings;
 
         // State
         [HideInInspector]
-        public Vector3 position;
+        public Vector3 Position;
         [HideInInspector]
-        public Vector3 forward;
+        public Vector3 Forward;
         Vector3 velocity;
 
         // To update:
-        Vector3 acceleration;
+        private Vector3 acceleration;
         [HideInInspector]
-        public Vector3 avgFlockHeading;
+        public Vector3 AvgFlockHeading;
         [HideInInspector]
-        public Vector3 avgAvoidanceHeading;
+        public Vector3 AvgAvoidanceHeading;
         [HideInInspector]
-        public Vector3 centreOfFlockmates;
+        public Vector3 CentreOfFlockmates;
         [HideInInspector]
-        public int numPerceivedFlockmates;
+        public int NumPerceivedFlockmates;
 
         // Cached
-        Material material;
-        Transform cachedTransform;
-        Transform target;
+        private Material material;
+        private Transform cachedTransform;
+        private Transform target;
 
-        void Awake()
+        private void Awake()
         {
             material = transform.GetComponentInChildren<MeshRenderer>().material;
             cachedTransform = transform;
@@ -43,10 +40,10 @@ namespace Assets.Scripts.BOIDS
             this.target = target;
             this.settings = settings;
 
-            position = cachedTransform.position;
-            forward = cachedTransform.forward;
+            Position = cachedTransform.position;
+            Forward = cachedTransform.forward;
 
-            float startSpeed = (settings.minSpeed + settings.maxSpeed) / 2;
+            float startSpeed = (settings.MinSpeed + settings.MaxSpeed) / 2;
             velocity = transform.forward * startSpeed;
         }
 
@@ -64,19 +61,19 @@ namespace Assets.Scripts.BOIDS
 
             if (target != null)
             {
-                Vector3 offsetToTarget = target.position - position;
-                acceleration = SteerTowards(offsetToTarget) * settings.targetWeight;
+                Vector3 offsetToTarget = target.position - Position;
+                acceleration = SteerTowards(offsetToTarget) * settings.TargetWeight;
             }
 
-            if (numPerceivedFlockmates != 0)
+            if (NumPerceivedFlockmates != 0)
             {
-                centreOfFlockmates /= numPerceivedFlockmates;
+                CentreOfFlockmates /= NumPerceivedFlockmates;
 
-                Vector3 offsetToFlockmatesCentre = centreOfFlockmates - position;
+                Vector3 offsetToFlockmatesCentre = CentreOfFlockmates - Position;
 
-                var alignmentForce = SteerTowards (avgFlockHeading) * settings.alignWeight;
-                var cohesionForce = SteerTowards (offsetToFlockmatesCentre) * settings.cohesionWeight;
-                var seperationForce = SteerTowards (avgAvoidanceHeading) * settings.seperateWeight;
+                var alignmentForce = SteerTowards (AvgFlockHeading) * settings.AlignWeight;
+                var cohesionForce = SteerTowards (offsetToFlockmatesCentre) * settings.CohesionWeight;
+                var seperationForce = SteerTowards (AvgAvoidanceHeading) * settings.SeperateWeight;
 
                 acceleration += alignmentForce;
                 acceleration += cohesionForce;
@@ -86,26 +83,26 @@ namespace Assets.Scripts.BOIDS
             if (IsHeadingForCollision())
             {
                 Vector3 collisionAvoidDir = ObstacleRays ();
-                Vector3 collisionAvoidForce = SteerTowards (collisionAvoidDir) * settings.avoidCollisionWeight;
+                Vector3 collisionAvoidForce = SteerTowards (collisionAvoidDir) * settings.AvoidCollisionWeight;
                 acceleration += collisionAvoidForce;
             }
 
             velocity += acceleration * Time.deltaTime;
             float speed = velocity.magnitude;
             Vector3 dir = velocity / speed;
-            speed = Mathf.Clamp(speed, settings.minSpeed, settings.maxSpeed);
+            speed = Mathf.Clamp(speed, settings.MinSpeed, settings.MaxSpeed);
             velocity = dir * speed;
 
             cachedTransform.position += velocity * Time.deltaTime;
             cachedTransform.forward = dir;
-            position = cachedTransform.position;
-            forward = dir;
+            Position = cachedTransform.position;
+            Forward = dir;
         }
 
         bool IsHeadingForCollision()
         {
             RaycastHit hit;
-            if (Physics.SphereCast(position, settings.boundsRadius, forward, out hit, settings.collisionAvoidDst, settings.obstacleMask))
+            if (Physics.SphereCast(Position, settings.BoundsRadius, Forward, out hit, settings.CollisionAvoidDst, settings.ObstacleMask))
             {
                 return true;
             }
@@ -115,25 +112,25 @@ namespace Assets.Scripts.BOIDS
 
         Vector3 ObstacleRays()
         {
-            Vector3[] rayDirections = BoidHelper.directions;
+            Vector3[] rayDirections = BoidHelper.Directions;
 
             for (int i = 0; i < rayDirections.Length; i++)
             {
                 Vector3 dir = cachedTransform.TransformDirection (rayDirections[i]);
-                Ray ray = new Ray (position, dir);
-                if (!Physics.SphereCast(ray, settings.boundsRadius, settings.collisionAvoidDst, settings.obstacleMask))
+                Ray ray = new Ray (Position, dir);
+                if (!Physics.SphereCast(ray, settings.BoundsRadius, settings.CollisionAvoidDst, settings.ObstacleMask))
                 {
                     return dir;
                 }
             }
 
-            return forward;
+            return Forward;
         }
 
         Vector3 SteerTowards(Vector3 vector)
         {
-            Vector3 v = vector.normalized * settings.maxSpeed - velocity;
-            return Vector3.ClampMagnitude(v, settings.maxSteerForce);
+            Vector3 v = vector.normalized * settings.MaxSpeed - velocity;
+            return Vector3.ClampMagnitude(v, settings.MaxSteerForce);
         }
 
     }
