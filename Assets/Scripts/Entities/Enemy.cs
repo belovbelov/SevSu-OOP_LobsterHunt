@@ -10,12 +10,14 @@ namespace Assets.Scripts.Entities
         public float Dist;
         private float enemySpeed;
 
-        Enemy()
+        private Enemy()
         {
             enemySpeed = CreatureSpeed;
         }
         private void Start()
         {
+            MinSpeed = enemySpeed- MinSpeedBias;
+            MaxSpeed = enemySpeed + MaxSpeedBias;
             CachedTransform = transform;
             Position = CachedTransform.position;
             Forward = CachedTransform.forward;

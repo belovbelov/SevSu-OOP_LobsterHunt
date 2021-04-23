@@ -10,24 +10,29 @@ namespace Assets.Scripts.Entities
         protected Vector3 Position;
         protected Vector3 Forward;
         protected Vector3 Velocity;
-        public Transform Target;
-        public Transform CachedTransform;
+        [SerializeField]
+        protected Transform Target;
+        [SerializeField]
+        protected Transform CachedTransform;
 
         protected float FishSpeed;
-
-        public float MinSpeedBias = 2;
-        public float MaxSteerForce = 3;
-        public float MaxSpeedBias = 5;
-        public float TargetWeight = 1;
+        [SerializeField]
+        protected float MinSpeedBias = 2;
+        [SerializeField]
+        protected float MaxSpeedBias = 5;
+        [SerializeField]
+        protected float MaxSteerForce = 3;
+        [SerializeField]
+        protected float TargetWeight = 1;
 
         public LayerMask ObstacleMask;
         public float BoundsRadius = .27f;
         public float AvoidCollisionWeight = 10;
         public float CollisionAvoidDst = 5;
 
-        public float MaxSpeed;
-        public float MinSpeed;
-        public Transform[] Points;
+        protected float MaxSpeed;
+        protected float MinSpeed;
+        protected Transform[] Points;
 
         protected Fish()
         {
