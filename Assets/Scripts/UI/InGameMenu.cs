@@ -7,7 +7,8 @@ namespace Assets.Scripts.UI
 {
     public class InGameMenu : MonoBehaviour
     {
-        public GameObject[] FishCount;
+        [SerializeField]
+        private GameObject[] fishCount;
         public static bool GameIsPaused;
 
         public GameObject PauseMenu;
@@ -18,7 +19,7 @@ namespace Assets.Scripts.UI
 
         private void Start()
         {
-            FishCount = GameObject.FindGameObjectsWithTag("Fish");
+            fishCount = GameObject.FindGameObjectsWithTag("Fish");
         }
 
         public void Update()
@@ -40,7 +41,8 @@ namespace Assets.Scripts.UI
                 ShowGameOverScreen();
             }
 
-            if (FishCount.Length == Weapon.FishKilled)
+            fishCount = GameObject.FindGameObjectsWithTag("Fish");
+            if (fishCount.Length == 0)
             {
                 ShowWinScreen();
             }

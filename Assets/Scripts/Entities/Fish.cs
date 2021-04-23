@@ -159,7 +159,6 @@ namespace Assets.Scripts.Entities
         void Die()
         {
             //Дописать скрипт начисления очков+смерти объекта
-            Weapon.FishKilled += 1;
             Destroy(gameObject);
         }
 

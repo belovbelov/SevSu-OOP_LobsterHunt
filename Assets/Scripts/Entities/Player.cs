@@ -123,12 +123,12 @@ namespace Assets.Scripts.Entities
             }
             if (!canBreathe)
             {
-            timeUnderWater += Time.deltaTime;
+                timeUnderWater += Time.deltaTime;
             }
 
             if (isSwimming)
             {
-                timeToFloat+=Time.deltaTime;
+                timeToFloat += Time.deltaTime;
                 Velocity.y = Mathf.Lerp(Velocity.y, -2.0f, Time.deltaTime * 6.0f);
                 if (isArising && timeToFloat > 0.1f)
                 {
@@ -145,7 +145,7 @@ namespace Assets.Scripts.Entities
             }
             if (canBreathe)
             {
-                timeUnderWater = Mathf.Lerp(timeUnderWater,0.0f, Time.deltaTime);
+                timeUnderWater = Mathf.Lerp(timeUnderWater, 0.0f, Time.deltaTime * 0.5f);
                 Velocity.y += Gravity * Time.deltaTime;
             }
             Controller.Move(Velocity * Time.deltaTime);
@@ -178,8 +178,7 @@ namespace Assets.Scripts.Entities
                 WeaponParent.localPosition = Vector3.MoveTowards(WeaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 2f * 0.1f);
             }
             else if (!isSwimming && !isSprinting && (Velocity.x != 0 || Velocity.z != 0))
-            {
-                //walking
+            { //walking
                 HeadBob(movementCounter, 0.015f, 0.015f);
                 movementCounter += Time.deltaTime * 5f;
                 WeaponParent.localPosition = Vector3.MoveTowards(WeaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 12f * 0.15f);

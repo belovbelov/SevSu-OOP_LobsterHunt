@@ -8,7 +8,6 @@ namespace Assets.Scripts
     public class Weapon : MonoBehaviour
     {
         #region Variables
-        public static int FishKilled;
         public Gun[] Loadout;
         public Transform WeaponParent;
         public Camera FpsCam;
@@ -17,7 +16,6 @@ namespace Assets.Scripts
         #endregion
         private void Start()
         {
-            FishKilled = 0;
             Equip(0);
         }
         private void Update()
