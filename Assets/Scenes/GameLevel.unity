@@ -463,13 +463,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CreatureSpeed: 4
-  Health: 10000000
   InRange: 0
   Target: {fileID: 0}
   CachedTransform: {fileID: 0}
-  MinSpeed: 5
+  MinSpeedBias: 1
+  MaxSpeedBias: 2
   MaxSteerForce: 7
-  MaxSpeed: 9
   TargetWeight: 5
   ObstacleMask:
     serializedVersion: 2
@@ -2901,14 +2900,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bea13c5a5927804988f65a3fb2e181e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CreatureSpeed: 4
-  Health: 50
+  CreatureSpeed: 3
   InRange: 0
   Target: {fileID: 0}
   CachedTransform: {fileID: 0}
-  MinSpeed: 4
+  MinSpeedBias: 2
+  MaxSpeedBias: 2
   MaxSteerForce: 5
-  MaxSpeed: 5
   TargetWeight: 1
   ObstacleMask:
     serializedVersion: 2
@@ -4056,14 +4054,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bea13c5a5927804988f65a3fb2e181e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CreatureSpeed: 4
-  Health: 50
+  CreatureSpeed: 3
   InRange: 0
   Target: {fileID: 0}
   CachedTransform: {fileID: 0}
-  MinSpeed: 4
+  MinSpeedBias: 2
+  MaxSpeedBias: 2
   MaxSteerForce: 5
-  MaxSpeed: 5
   TargetWeight: 1
   ObstacleMask:
     serializedVersion: 2
@@ -4073,9 +4070,9 @@ MonoBehaviour:
   CollisionAvoidDst: 5
   Points:
   - {fileID: 1627300367}
-  - {fileID: 664515510}
   - {fileID: 926697824}
   - {fileID: 1729096293}
+  - {fileID: 664515510}
 --- !u!1 &1627300366
 GameObject:
   m_ObjectHideFlags: 0
@@ -4601,14 +4598,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bea13c5a5927804988f65a3fb2e181e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CreatureSpeed: 4
-  Health: 50
+  CreatureSpeed: 3
   InRange: 0
   Target: {fileID: 1627300367}
   CachedTransform: {fileID: 0}
-  MinSpeed: 4
+  MinSpeedBias: 2
+  MaxSpeedBias: 2
   MaxSteerForce: 5
-  MaxSpeed: 5
   TargetWeight: 1
   ObstacleMask:
     serializedVersion: 2
@@ -4618,8 +4614,8 @@ MonoBehaviour:
   CollisionAvoidDst: 5
   Points:
   - {fileID: 1627300367}
-  - {fileID: 1729096293}
   - {fileID: 926697824}
+  - {fileID: 1729096293}
   - {fileID: 664515510}
 --- !u!1 &1708288580
 GameObject:
@@ -4974,9 +4970,7 @@ MonoBehaviour:
     m_Bits: 256
   JumpHeight: 1
   SprintModifier: 2
-  Velocity: {x: 0, y: 0, z: 0}
   WaterCheck: {fileID: 1843900622}
-  TimeInWater: 0
   Slider: {fileID: 220844021}
   WeaponParent: {fileID: 1926127756}
   NormalCam: {fileID: 225713004}

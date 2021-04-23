@@ -62,8 +62,8 @@ namespace Assets.Scripts.Entities
         public override void Move()
         {
             base.Move();
-            Dist = Vector3.Distance(transform.position, Points[current].position);
             transform.rotation *= Quaternion.Euler(0f, 90f, 0f);
+            Dist = Vector3.Distance(transform.position, Points[current].position);
             if (Dist < 5)
             {
                 current = (current + 1) % Points.Length;

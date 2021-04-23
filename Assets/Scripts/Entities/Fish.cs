@@ -32,6 +32,7 @@ namespace Assets.Scripts.Entities
 
         protected float MaxSpeed;
         protected float MinSpeed;
+        [SerializeField]
         protected Transform[] Points;
 
         protected Fish()
