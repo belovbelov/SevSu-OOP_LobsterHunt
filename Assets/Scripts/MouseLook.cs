@@ -6,11 +6,11 @@ namespace Assets.Scripts
     {
         #region Variables
 
-        public float MouseSensetivity = 400f;
-        public Transform PlayerBody;
-        private float xRotation;
-        private float mouseX;
-        private float mouseY;
+        public float mouseSensetivity = 400f;
+        public Transform playerBody;
+        float xRotation;
+        float mouseX;
+        float mouseY;
 
         #endregion
 
@@ -22,14 +22,14 @@ namespace Assets.Scripts
 
         private void Update()
         {
-            mouseX = Input.GetAxis("Mouse X") * MouseSensetivity * Time.deltaTime;
-            mouseY = Input.GetAxis("Mouse Y") * MouseSensetivity * Time.deltaTime;
+            mouseX = Input.GetAxis("Mouse X") * mouseSensetivity * Time.deltaTime;
+            mouseY = Input.GetAxis("Mouse Y") * mouseSensetivity * Time.deltaTime;
 
             xRotation -= mouseY;
             xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
             transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-            PlayerBody.Rotate(Vector3.up * mouseX);
+            playerBody.Rotate(Vector3.up * mouseX);
         }
     }
 }

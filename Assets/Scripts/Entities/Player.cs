@@ -11,19 +11,22 @@ namespace Assets.Scripts.Entities
         // Movement variables
         public CharacterController Controller;
         private float playerSpeed;
-        public float Gravity = -19.62f;
+        [SerializeField]
+        private float Gravity = -19.62f;
         public Transform GroundCheck;
-        public float GroundDistance = 0.21f;
+        [SerializeField]
+        private float GroundDistance = 0.21f;
         public LayerMask GroundMask;
-        public float JumpHeight = 1f;
+        [SerializeField]
+        private float JumpHeight = 1f;
         public float SprintModifier;
-        public Vector3 Velocity;
+        private Vector3 Velocity;
         private bool isSprinting;
         public Transform WaterCheck;
         private bool sprint;
         private bool jump;
         private bool crouch;
-        public float TimeInWater;
+        private float TimeInWater;
 
         public OxygenUI Slider;
 
@@ -85,7 +88,7 @@ namespace Assets.Scripts.Entities
             isGrounded = Physics.CheckSphere(GroundCheck.position, GroundDistance, GroundMask);
             isJumping = jump && isGrounded;
 
-            isSwimming = WaterCheck.position.y > transform.position.y;
+            isSwimming = WaterCheck.position.y > transform.position.y - 0.3f;
             isArising = jump && isSwimming;
             isCrouching = crouch && isSwimming && !isArising;
 
@@ -120,7 +123,7 @@ namespace Assets.Scripts.Entities
                 Velocity.y = Mathf.Lerp(Velocity.y, -2.0f, Time.deltaTime * 6.0f);
                 if (isArising && TimeInWater > 0.15f)
                 {
-                    Velocity.y = Mathf.Lerp(Velocity.y, Mathf.Sqrt(-Gravity * 2.0f), Time.deltaTime * 8.0f);
+                    Velocity.y = Mathf.Lerp(Velocity.y, Mathf.Sqrt(-Gravity * 3.0f), Time.deltaTime * 8.0f);
                 }
                 if (isCrouching)
                 {
@@ -138,6 +141,7 @@ namespace Assets.Scripts.Entities
             //FOV
             if (isSprinting)
             {
+                targetWeaponBobPosition.z -= 0.2f;
                 NormalCam.fieldOfView = Mathf.Lerp(NormalCam.fieldOfView, baseFov * SprintFovModifier, Time.deltaTime * 8f);
             }
             else
@@ -151,10 +155,6 @@ namespace Assets.Scripts.Entities
                 //airborne
                 HeadBob(idleCounter, 0.015f, 0.015f);
                 idleCounter += Time.deltaTime * 0.5f;
-                if (isSprinting)
-                {
-                    targetWeaponBobPosition.z -= 0.4f;
-                }
                 WeaponParent.localPosition = Vector3.MoveTowards(WeaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 2f * 0.2f);
             }
             else if (Velocity.x == 0 && Velocity.z == 0 || isSwimming)
@@ -172,19 +172,17 @@ namespace Assets.Scripts.Entities
                 WeaponParent.localPosition = Vector3.MoveTowards(WeaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 12f * 0.15f);
             }
             else
-            {
-                //sprinting
+            { //sprinting
                 HeadBob(movementCounter, 0.02f, 0.02f);
                 movementCounter += Time.deltaTime * 6.75f;
-                targetWeaponBobPosition.z -= 0.2f;
                 WeaponParent.localPosition = Vector3.MoveTowards(WeaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 12f * 0.25f);
             }
         }
 
-        void HeadBob(float pZ, float pXIntensity, float pYIntensity)
+        private void HeadBob(float pZ, float pXIntensity, float pYIntensity)
         {
-            float t_aim_adjust = 1f;
-            targetWeaponBobPosition = weaponParentCurrentPos + new Vector3(Mathf.Cos(pZ) * pXIntensity * t_aim_adjust, Mathf.Sin(pZ * 2) * pYIntensity * t_aim_adjust, 0);
+            float tAimAdjust = 1f;
+            targetWeaponBobPosition = weaponParentCurrentPos + new Vector3(Mathf.Cos(pZ) * pXIntensity * tAimAdjust, Mathf.Sin(pZ * 2) * pYIntensity * tAimAdjust, 0);
         }
 
     }

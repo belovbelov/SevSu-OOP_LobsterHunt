@@ -5,7 +5,7 @@ namespace Assets.Scripts.Entities
 {
     public class Fish : Creature
     {
-        public float Health = 50f;
+        private float health = 50f;
         public bool InRange;
         protected Vector3 Position;
         protected Vector3 Forward;
@@ -15,9 +15,9 @@ namespace Assets.Scripts.Entities
 
         protected float FishSpeed;
 
-        public float MinSpeed = 2;
+        public float MinSpeedBias = 2;
         public float MaxSteerForce = 3;
-        public float MaxSpeed = 5;
+        public float MaxSpeedBias = 5;
         public float TargetWeight = 1;
 
         public LayerMask ObstacleMask;
@@ -25,6 +25,8 @@ namespace Assets.Scripts.Entities
         public float AvoidCollisionWeight = 10;
         public float CollisionAvoidDst = 5;
 
+        public float MaxSpeed;
+        public float MinSpeed;
         public Transform[] Points;
 
         protected Fish()
@@ -34,6 +36,8 @@ namespace Assets.Scripts.Entities
 
         private void Start()
         {
+            MinSpeed = FishSpeed - MinSpeedBias;
+            MaxSpeed = FishSpeed + MaxSpeedBias;
             CachedTransform = transform;
             Position = CachedTransform.position;
             Forward = CachedTransform.forward;
@@ -140,8 +144,8 @@ namespace Assets.Scripts.Entities
         }
         public void TakeDamage(float amountDamage)
         {
-            Health -= amountDamage;
-            if (Health <= 0f)
+            health -= amountDamage;
+            if (health <= 0f)
             {
                 Die();
             }
