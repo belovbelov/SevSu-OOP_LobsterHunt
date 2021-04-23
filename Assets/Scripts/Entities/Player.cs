@@ -26,7 +26,8 @@ namespace Assets.Scripts.Entities
         private bool sprint;
         private bool jump;
         private bool crouch;
-        private float TimeInWater;
+        private float timeUnderWater;
+        private float timeToFloat;
 
         public OxygenUI Slider;
 
@@ -39,6 +40,8 @@ namespace Assets.Scripts.Entities
         private float adjustedSpeed;
         public static bool IsBreathing;
         public static bool IsDead;
+
+        private bool canBreathe;
         //FOV
         public Transform WeaponParent;
         public Camera NormalCam;
@@ -89,11 +92,12 @@ namespace Assets.Scripts.Entities
             isJumping = jump && isGrounded;
 
             isSwimming = WaterCheck.position.y > transform.position.y - 0.3f;
+            canBreathe = WaterCheck.position.y < NormalCam.transform.position.y;
             isArising = jump && isSwimming;
             isCrouching = crouch && isSwimming && !isArising;
 
-            IsBreathing = (1 - TimeInWater / 30.0f) > 0;
-            Slider.SetSlider(1 - TimeInWater / 30.0f);
+            IsBreathing = (1 - timeUnderWater / 30.0f) > 0;
+            Slider.SetSlider(1 - timeUnderWater / 30.0f);
 
             //Movement
             if (isGrounded && Velocity.y < 0)
@@ -117,11 +121,16 @@ namespace Assets.Scripts.Entities
             {
                 Velocity.y = Mathf.Sqrt(JumpHeight * -2f * Gravity);
             }
+            if (!canBreathe)
+            {
+            timeUnderWater += Time.deltaTime;
+            }
+
             if (isSwimming)
             {
-                TimeInWater += Time.deltaTime;
+                timeToFloat+=Time.deltaTime;
                 Velocity.y = Mathf.Lerp(Velocity.y, -2.0f, Time.deltaTime * 6.0f);
-                if (isArising && TimeInWater > 0.15f)
+                if (isArising && timeToFloat > 0.1f)
                 {
                     Velocity.y = Mathf.Lerp(Velocity.y, Mathf.Sqrt(-Gravity * 3.0f), Time.deltaTime * 8.0f);
                 }
@@ -132,7 +141,11 @@ namespace Assets.Scripts.Entities
             }
             else
             {
-                TimeInWater = 0.0f;
+                timeToFloat = 0f;
+            }
+            if (canBreathe)
+            {
+                timeUnderWater = Mathf.Lerp(timeUnderWater,0.0f, Time.deltaTime);
                 Velocity.y += Gravity * Time.deltaTime;
             }
             Controller.Move(Velocity * Time.deltaTime);
