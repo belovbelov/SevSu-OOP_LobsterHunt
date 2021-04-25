@@ -6,16 +6,18 @@ namespace Assets.Scripts
     {
         public Transform WaterPlane;
 
-        private bool defaultFog;
-        private float defaultFogDensity;
+        private bool defaultFog = true;
+        [SerializeField]
+        private float defaultFogDensityStart = 50f, defaultFogDensityEnd = 300f;
+        [SerializeField]
+        private Color defaultFogColor = new Color32(255, 255, 255,255);
 
+        public Color color = new Color32(64, 161, 195, 255);
         public float Density = 0.075f;
-
         // Use this for initialization
         private void Start()
         {
             defaultFog = RenderSettings.fog;
-            defaultFogDensity = RenderSettings.fogDensity;
         }
 
         // Update is called once per frame
@@ -30,13 +32,24 @@ namespace Assets.Scripts
             // SetFog(waterPlane.gameObject.GetComponent<Renderer>().bounds.Contains(transform.position));
 
             // using a plane that can be rotated
-            SetFog(WaterPlane.InverseTransformPoint(transform.position).y < 0.425f);
+            //SetFog(WaterPlane.InverseTransformPoint(transform.position).y < 0.425f);
         }
 
         void SetFog(bool underwater)
         {
-            RenderSettings.fog = underwater ? true : defaultFog;
-            RenderSettings.fogDensity = underwater ? Density : defaultFogDensity;
+            //RenderSettings.fog = underwater ? true : defaultFog;
+            RenderSettings.fogMode = underwater ? FogMode.Exponential : FogMode.Linear;
+            if (underwater)
+            {
+                RenderSettings.fogDensity = Density;
+                RenderSettings.fogColor = color;
+            }
+            else
+            {
+                RenderSettings.fogStartDistance = defaultFogDensityStart;
+                RenderSettings.fogEndDistance = defaultFogDensityEnd;
+                RenderSettings.fogColor = defaultFogColor;
+            }
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Assets.Scripts;
-using Assets.Scripts.Entities;
+﻿using Assets.Scripts.Entities;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -7,10 +6,10 @@ namespace Assets.Scripts
     public abstract class HeadBob
     {
         protected Player player; 
-        protected float TAimAdjust = 1f;
+        protected float AimAdjust = 1f;
         protected float Intensity = 0.015f;
 
-        public abstract void doHeadBob();
+        public abstract void DoHeadBob();
     }
 
     public class HeadBobIdle : HeadBob
@@ -20,9 +19,9 @@ namespace Assets.Scripts
             player = p;
         }
 
-        public override void doHeadBob()
+        public override void DoHeadBob()
         {
-            player.TargetWeaponBobPosition = player.WeaponParentCurrentPos + new Vector3(Mathf.Cos(player.MovementCounter) * Intensity * TAimAdjust, Mathf.Sin(player.MovementCounter * 2) * Intensity * TAimAdjust, 0);
+            player.TargetWeaponBobPosition = player.WeaponParentCurrentPos + new Vector3(Mathf.Cos(player.MovementCounter) * Intensity * AimAdjust, Mathf.Sin(player.MovementCounter * 2) * Intensity * AimAdjust, 0);
             player.IdleCounter += Time.deltaTime;
             player.WeaponParent.localPosition = Vector3.MoveTowards(player.WeaponParent.localPosition, player.TargetWeaponBobPosition, Time.deltaTime * 2f * 0.1f);
         }
@@ -36,10 +35,10 @@ namespace Assets.Scripts
 
         }
 
-        public override void doHeadBob()
+        public override void DoHeadBob()
         {
             
-            player.TargetWeaponBobPosition = player.WeaponParentCurrentPos + new Vector3(Mathf.Cos(player.MovementCounter) * Intensity * TAimAdjust, Mathf.Sin(player.MovementCounter * 2) * Intensity * TAimAdjust, 0);
+            player.TargetWeaponBobPosition = player.WeaponParentCurrentPos + new Vector3(Mathf.Cos(player.MovementCounter) * Intensity * AimAdjust, Mathf.Sin(player.MovementCounter * 2) * Intensity * AimAdjust, 0);
             player.IdleCounter += Time.deltaTime * 0.5f;
             player.WeaponParent.localPosition = Vector3.MoveTowards(player.WeaponParent.localPosition, player.TargetWeaponBobPosition, Time.deltaTime * 2f * 0.2f);
         }
@@ -47,15 +46,15 @@ namespace Assets.Scripts
 
     public class HeadBobRun : HeadBob
     {
-        private new readonly float intensity = 0.02f;
+        private readonly float intensity = 0.02f;
         public HeadBobRun(Player p)
         {
             player = p;
         }
 
-        public override void doHeadBob()
+        public override void DoHeadBob()
         {
-            player.TargetWeaponBobPosition = player.WeaponParentCurrentPos + new Vector3(Mathf.Cos(player.MovementCounter) * intensity * TAimAdjust, Mathf.Sin(player.MovementCounter * 2) * intensity * TAimAdjust, 0);
+            player.TargetWeaponBobPosition = player.WeaponParentCurrentPos + new Vector3(Mathf.Cos(player.MovementCounter) * intensity * AimAdjust, Mathf.Sin(player.MovementCounter * 2) * intensity * AimAdjust, 0);
             player.MovementCounter += Time.deltaTime * 6.75f;
             player.WeaponParent.localPosition = Vector3.MoveTowards(player.WeaponParent.localPosition, player.TargetWeaponBobPosition, Time.deltaTime * 12f * 0.25f);
         }
@@ -68,9 +67,9 @@ namespace Assets.Scripts
             player = p;
         }
 
-        public override void doHeadBob()
+        public override void DoHeadBob()
         {
-            player.TargetWeaponBobPosition = player.WeaponParentCurrentPos + new Vector3(Mathf.Cos(player.MovementCounter) * 0.02f * TAimAdjust, Mathf.Sin(player.MovementCounter * 2) * 0.02f * TAimAdjust, 0);
+            player.TargetWeaponBobPosition = player.WeaponParentCurrentPos + new Vector3(Mathf.Cos(player.MovementCounter) * 0.02f * AimAdjust, Mathf.Sin(player.MovementCounter * 2) * 0.02f * AimAdjust, 0);
             player.MovementCounter += Time.deltaTime * 5f;
             player.WeaponParent.localPosition = Vector3.MoveTowards(player.WeaponParent.localPosition,
                 player.TargetWeaponBobPosition, Time.deltaTime * 12f * 0.15f);

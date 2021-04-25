@@ -37,6 +37,7 @@ namespace Assets.Scripts.UI
             }
 
             fishCount = GameObject.FindGameObjectsWithTag("Fish");
+
             if (fishCount.Length == 0)
             {
                 ShowWinScreen();

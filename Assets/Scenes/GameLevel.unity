@@ -14,11 +14,11 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
-  m_FogColor: {r: 0.25031152, g: 0.6313726, b: 0.7647059, a: 1}
-  m_FogMode: 2
-  m_FogDensity: 0.075
-  m_LinearFogStart: 0
+  m_Fog: 1
+  m_FogColor: {r: 1, g: 1, b: 1, a: 1}
+  m_FogMode: 1
+  m_FogDensity: 0.005
+  m_LinearFogStart: 50
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.21629149, g: 0.23570226, b: 0.03327561, a: 1}
   m_AmbientEquatorColor: {r: 0.37626222, g: 0.3515327, b: 0.30946895, a: 1}
@@ -5012,6 +5012,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WaterPlane: {fileID: 702548476}
+  defaultFogDensityStart: 50
+  defaultFogDensityEnd: 300
+  defaultFogColor: {r: 1, g: 1, b: 1, a: 1}
+  color: {r: 0.24705882, g: 0.61960787, b: 0.7490196, a: 1}
   Density: 0.075
 --- !u!143 &1836556780
 CharacterController:
@@ -5068,8 +5072,6 @@ MonoBehaviour:
     m_Bits: 256
   WaterCheck: {fileID: 1843900622}
   Slider: {fileID: 220844021}
-  IsBreathing: 0
-  IsDead: 0
   WeaponParent: {fileID: 1926127756}
   NormalCam: {fileID: 225713004}
 --- !u!136 &1836556783

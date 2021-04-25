@@ -36,8 +36,8 @@ namespace Assets.Scripts.Entities
         private bool isArising;
         private bool isCrouching;
         private float adjustedSpeed;
-        public bool IsBreathing;
-        public bool IsDead;
+        public bool IsBreathing { get; set; }
+        public bool IsDead { get; set; }
 
         private bool canBreathe;
 
@@ -191,7 +191,7 @@ namespace Assets.Scripts.Entities
 
             HeadBob bob = CheckState();
 
-            bob.doHeadBob();
+            bob.DoHeadBob();
             //Head Bob
             /*if (!isGrounded && !isSwimming)
             {
