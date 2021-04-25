@@ -10,17 +10,12 @@ namespace Assets.Scripts.UI
         [SerializeField]
         private GameObject[] fishCount;
         public static bool GameIsPaused;
-
+        public Player Player;
         public GameObject PauseMenu;
 
         public GameObject GameOverScreen;
 
         public GameObject WinScreen;
-
-        private void Start()
-        {
-            fishCount = GameObject.FindGameObjectsWithTag("Fish");
-        }
 
         public void Update()
         {

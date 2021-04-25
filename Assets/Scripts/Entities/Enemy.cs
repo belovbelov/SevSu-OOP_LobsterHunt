@@ -7,8 +7,11 @@ namespace Assets.Scripts.Entities
 
         private int current;
         private int colliderCounter;
-        public float Dist;
-        private float enemySpeed;
+        [SerializeField] 
+        private float dist;
+        private readonly float enemySpeed;
+
+        public Player Player;
 
         private Enemy()
         {
@@ -63,8 +66,8 @@ namespace Assets.Scripts.Entities
         {
             base.Move();
             transform.rotation *= Quaternion.Euler(0f, 90f, 0f);
-            Dist = Vector3.Distance(transform.position, Points[current].position);
-            if (Dist < 5)
+            dist = Vector3.Distance(transform.position, Points[current].position);
+            if (dist < 5)
             {
                 current = (current + 1) % Points.Length;
                 Target = Points[current];

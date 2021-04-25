@@ -15,7 +15,7 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 0
-  m_FogColor: {r: 0.25031152, g: 0.5649181, b: 0.7075472, a: 1}
+  m_FogColor: {r: 0.25031152, g: 0.6313726, b: 0.7647059, a: 1}
   m_FogMode: 2
   m_FogDensity: 0.075
   m_LinearFogStart: 0
@@ -387,6 +387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fishCount: []
+  Player: {fileID: 1836556782}
   PauseMenu: {fileID: 1445496231}
   GameOverScreen: {fileID: 2080943477}
   WinScreen: {fileID: 193864780}
@@ -482,7 +483,8 @@ MonoBehaviour:
   - {fileID: 1903048668}
   - {fileID: 1499754476}
   - {fileID: 376405485}
-  Dist: 0
+  dist: 0
+  Player: {fileID: 1836556782}
 --- !u!95 &128973311
 Animator:
   serializedVersion: 3
@@ -2245,13 +2247,13 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 0.4
+  m_Intensity: 1.2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -5060,16 +5062,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CreatureSpeed: 4
   Controller: {fileID: 1836556780}
-  Gravity: -19.62
   GroundCheck: {fileID: 1727158565}
-  GroundDistance: 0.21
   GroundMask:
     serializedVersion: 2
     m_Bits: 256
-  JumpHeight: 1
-  SprintModifier: 2
   WaterCheck: {fileID: 1843900622}
   Slider: {fileID: 220844021}
+  IsBreathing: 0
+  IsDead: 0
   WeaponParent: {fileID: 1926127756}
   NormalCam: {fileID: 225713004}
 --- !u!136 &1836556783
@@ -5081,7 +5081,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 1836556777}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
@@ -5782,7 +5782,7 @@ Light:
     m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
-    m_Strength: 1
+    m_Strength: 0.184
     m_Bias: 0.02
     m_NormalBias: 0.1
     m_NearPlane: 0.1

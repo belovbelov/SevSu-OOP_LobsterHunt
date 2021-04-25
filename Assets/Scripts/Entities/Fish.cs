@@ -5,7 +5,8 @@ namespace Assets.Scripts.Entities
 {
     public class Fish : Creature
     {
-        private float health = 50f;
+        private float health = 50f; 
+
         public bool InRange;
         protected Vector3 Position;
         protected Vector3 Forward;
