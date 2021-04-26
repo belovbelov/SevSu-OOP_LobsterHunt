@@ -66,23 +66,11 @@ namespace Assets.Scripts.Entities
 
         private Vector3 targetWeaponBobPosition;
 
-        public float MovementCounter
-        {
-            get => movementCounter;
-            set => movementCounter = value;
-        }
+        public float MovementCounter { get; set; }
 
-        private float movementCounter;
-
-        public float IdleCounter
-        {
-            get => idleCounter;
-            set => idleCounter = value;
-        }
-
-        private float idleCounter;
-
-
+        public float IdleCounter { get; set; }
+        //SCORE SYSTEM
+        [SerializeField] private float score;
         #endregion
 
         private Player() => playerSpeed = CreatureSpeed;
@@ -120,7 +108,7 @@ namespace Assets.Scripts.Entities
             isGrounded = Physics.CheckSphere(GroundCheck.position, groundDistance, GroundMask);
             isJumping = jump && isGrounded;
 
-            isSwimming = WaterCheck.position.y > transform.position.y - 0.3f;
+            isSwimming = WaterCheck.position.y > GroundCheck.transform.position.y;
             canBreathe = WaterCheck.position.y < NormalCam.transform.position.y;
             isArising = jump && isSwimming;
             isCrouching = crouch && isSwimming && !isArising;
@@ -189,7 +177,7 @@ namespace Assets.Scripts.Entities
             //FOV
             ChangeFov();
 
-            HeadBob bob = CheckState();
+            var bob = CheckState();
 
             bob.DoHeadBob();
             //Head Bob

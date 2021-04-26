@@ -37,11 +37,12 @@ namespace Assets.Scripts
             }
         }
         #region Private methods
-        void Shoot()
+
+        private void Shoot()
         {
             if (Physics.Raycast(FpsCam.transform.position, FpsCam.transform.forward, out RaycastHit hit, Loadout[currentIndex].range))
             {
-                Fish target = hit.transform.GetComponent<Fish>();
+                var target = hit.transform.GetComponent<Fish>();
                 if (target != null && target.InRange)
                 {
                     target.TakeDamage(Loadout[currentIndex].damage);
@@ -61,7 +62,7 @@ namespace Assets.Scripts
 
             currentIndex = pInd;
 
-            GameObject newWeapon = Instantiate(Loadout[pInd].prefab, WeaponParent.position, WeaponParent.rotation, WeaponParent) as GameObject;
+            var newWeapon = Instantiate(Loadout[pInd].prefab, WeaponParent.position, WeaponParent.rotation, WeaponParent) as GameObject;
             newWeapon.transform.localPosition = Vector3.zero;
             currentWeapon = newWeapon;
         }

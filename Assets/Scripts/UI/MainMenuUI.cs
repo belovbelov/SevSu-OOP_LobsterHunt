@@ -9,7 +9,7 @@ namespace Assets.Scripts.UI
     {
         public void PlayGame()
         {
-            SceneManager.LoadScene("GameLevel");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
 
         public void QuitGame()

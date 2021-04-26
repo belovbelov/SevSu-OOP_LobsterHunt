@@ -32,7 +32,6 @@ namespace Assets.Scripts
         public HeadBobJump(Player p)
         {
             player = p;
-
         }
 
         public override void DoHeadBob()

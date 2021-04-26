@@ -10,9 +10,9 @@ namespace Assets.Scripts
         [SerializeField]
         private float defaultFogDensityStart = 50f, defaultFogDensityEnd = 300f;
         [SerializeField]
-        private Color defaultFogColor = new Color32(255, 255, 255,255);
+        private Color32 defaultFogColor = new Color32(255, 255, 255,255);
 
-        public Color color = new Color32(64, 161, 195, 255);
+        public Color32 Color = new Color32(64, 161, 195, 255);
         public float Density = 0.075f;
         // Use this for initialization
         private void Start()
@@ -42,7 +42,7 @@ namespace Assets.Scripts
             if (underwater)
             {
                 RenderSettings.fogDensity = Density;
-                RenderSettings.fogColor = color;
+                RenderSettings.fogColor = Color;
             }
             else
             {

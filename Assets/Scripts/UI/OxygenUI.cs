@@ -10,11 +10,11 @@ namespace Assets.Scripts.UI
     public class OxygenUI : MonoBehaviour
     {
         private Slider slider;
-
         private void Awake()
         {
             slider = GetComponent<Slider>();
         }
+
 
         public void SetSlider(float value)
         {

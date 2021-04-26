@@ -1,12 +1,15 @@
 ﻿using Assets.Scripts.BOIDS;
+using TMPro;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Entities
 {
     public class Fish : Creature
     {
-        private float health = 50f; 
-
+        private float health = 50f;
+        private float initialHealth;
         public bool InRange;
         protected Vector3 Position;
         protected Vector3 Forward;
@@ -41,6 +44,12 @@ namespace Assets.Scripts.Entities
             FishSpeed = CreatureSpeed;
         }
 
+        private void Awake()
+        {
+            initialHealth = health;
+            var txt = GameObject.Find("ScoreText");
+            txt.GetComponent<TextMeshProUGUI>().text = "Score: " + Score.Amount;
+        }
         private void Start()
         {
             MinSpeed = FishSpeed - MinSpeedBias;
@@ -157,11 +166,18 @@ namespace Assets.Scripts.Entities
                 Die();
             }
         }
-        void Die()
+        public void Die()
         {
             //Дописать скрипт начисления очков+смерти объекта
             Destroy(gameObject);
+            Score.Amount += (int)initialHealth;
+            UpdateScore();
         }
 
+        private static void UpdateScore()
+        {
+            var txt = GameObject.Find("ScoreText");
+            txt.GetComponent<TextMeshProUGUI>().text = "Score: " + Score.Amount;
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace Assets.Scripts.UI
 
         public GameObject GameOverScreen;
 
-        public GameObject WinScreen;
+        public GameObject NextLevelScreen;
 
         public void Update()
         {
@@ -37,10 +37,10 @@ namespace Assets.Scripts.UI
             }
 
             fishCount = GameObject.FindGameObjectsWithTag("Fish");
-
+    
             if (fishCount.Length == 0)
             {
-                ShowWinScreen();
+                ShowNextLevelScreen();
             }
         }
 
@@ -76,6 +76,11 @@ namespace Assets.Scripts.UI
             Application.Quit();
         }
 
+        public void LoadNextLevel()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+
         public void ShowGameOverScreen()
         {
             PauseMenu.SetActive(false);
@@ -92,13 +97,19 @@ namespace Assets.Scripts.UI
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
-        public void ShowWinScreen()
+        public void ShowNextLevelScreen()
         {
             PauseMenu.SetActive(false);
-            WinScreen.SetActive(true);
+            NextLevelScreen.SetActive(true);
             Time.timeScale = 0f;
             Cursor.lockState = CursorLockMode.None;
             GameIsPaused = true;
         }
+
+        public void ShowWinScreen()
+        {
+
+        }
+
     }
 }
