@@ -69,8 +69,6 @@ namespace Assets.Scripts.Entities
         public float MovementCounter { get; set; }
 
         public float IdleCounter { get; set; }
-        //SCORE SYSTEM
-        [SerializeField] private float score;
         #endregion
 
         private Player() => playerSpeed = CreatureSpeed;

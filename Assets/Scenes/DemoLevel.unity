@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1974391868}
-  m_IndirectSpecularColor: {r: 0.070639834, g: 0.35380733, b: 0.9707761, a: 1}
+  m_IndirectSpecularColor: {r: 0.07052981, g: 0.35370934, b: 0.9708009, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5213,7 +5213,6 @@ MonoBehaviour:
   Slider: {fileID: 220844021}
   WeaponParent: {fileID: 1926127756}
   NormalCam: {fileID: 225713004}
-  score: 0
 --- !u!136 &1836556783
 CapsuleCollider:
   m_ObjectHideFlags: 0
