@@ -48,7 +48,7 @@ namespace Assets.Scripts.Entities
         {
             initialHealth = health;
             var txt = GameObject.Find("ScoreText");
-            txt.GetComponent<TextMeshProUGUI>().text = "Score: " + Score.Amount;
+            txt.GetComponent<TextMeshProUGUI>().text = "Score: " + Score.Instance.Amount;
         }
         private void Start()
         {
@@ -148,8 +148,8 @@ namespace Assets.Scripts.Entities
 
             for (int i = 0; i < rayDirections.Length; i++)
             {
-                Vector3 dir = CachedTransform.TransformDirection(rayDirections[i]);
-                Ray ray = new Ray(Position, dir);
+                var dir = CachedTransform.TransformDirection(rayDirections[i]);
+                var ray = new Ray(Position, dir);
                 if (!Physics.SphereCast(ray, BoundsRadius, CollisionAvoidDst, ObstacleMask))
                 {
                     return dir;
@@ -170,14 +170,15 @@ namespace Assets.Scripts.Entities
         {
             //Дописать скрипт начисления очков+смерти объекта
             Destroy(gameObject);
-            Score.Amount += (int)initialHealth;
             UpdateScore();
         }
 
-        private static void UpdateScore()
+        private void UpdateScore()
         {
+            Score.Instance.Amount += (int)initialHealth;
+            Score.Instance.Fishkilled += 1;
             var txt = GameObject.Find("ScoreText");
-            txt.GetComponent<TextMeshProUGUI>().text = "Score: " + Score.Amount;
+            txt.GetComponent<TextMeshProUGUI>().text = "Score: " + Score.Instance.Amount;
         }
     }
 }

@@ -10,14 +10,13 @@ namespace Assets.Scripts
             get { return instance; }
         }
 
-        [SerializeField] public static int Amount { get; set; }
-        public static int Fishkilled { get; set; }
-        public static int TimeSpent { get; set; }
-        public static int Deaths { get; set; }
+        public int Amount { get; set; }
+        public int Fishkilled { get; set; }
+        public float TimeSpent { get; set; }
+        public int Deaths { get; set; }
 
         private void Awake()
         {
-            Amount = 0;
             if (instance != null && instance != this)
             {
                 Destroy(this.gameObject);
@@ -27,6 +26,10 @@ namespace Assets.Scripts
                 instance = this;
                 DontDestroyOnLoad(this);
             }
+            instance.Amount = 0;
+            instance.Deaths = 0;
+            instance.TimeSpent = 0;
+            instance.Fishkilled = 0;
         }
     }
 }

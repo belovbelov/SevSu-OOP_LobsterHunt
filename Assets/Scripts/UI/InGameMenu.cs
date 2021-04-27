@@ -16,9 +16,14 @@ namespace Assets.Scripts.UI
         public GameObject GameOverScreen;
 
         public GameObject NextLevelScreen;
-
+        [SerializeField] private readonly int initialScore = Score.Instance.Amount;
         public void Update()
         {
+            //переместить код в функцию
+            if (!GameIsPaused)
+            {
+                Score.Instance.TimeSpent = Time.timeSinceLevelLoad;
+            }
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 if (GameIsPaused)
@@ -92,6 +97,8 @@ namespace Assets.Scripts.UI
 
         public void RestartGame()
         {
+            Score.Instance.Amount = initialScore;
+            Score.Instance.Deaths += 1;
             GameOverScreen.SetActive(false);
             GameIsPaused = false;
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -104,6 +111,9 @@ namespace Assets.Scripts.UI
             Time.timeScale = 0f;
             Cursor.lockState = CursorLockMode.None;
             GameIsPaused = true;
+            Debug.Log(Score.Instance.Fishkilled.ToString());
+            Debug.Log(Score.Instance.TimeSpent.ToString("0"));
+            Debug.Log(Score.Instance.Deaths.ToString());
         }
 
         public void ShowWinScreen()
