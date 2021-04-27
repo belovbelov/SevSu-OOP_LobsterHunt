@@ -67,7 +67,6 @@
     <Compile Include="Assets\Scripts\UnderwaterFog.cs" />
     <Compile Include="Assets\Scripts\UI\MainMenuUI.cs" />
     <Compile Include="Assets\Scripts\BOIDS\BoidSettings.cs" />
-    <Compile Include="Assets\Scripts\UI\InGameMenu.cs" />
     <Compile Include="Assets\Scripts\BOIDS\BoidManager.cs" />
     <Compile Include="Assets\Scripts\MouseLook.cs" />
     <Compile Include="Assets\Scripts\HeadBob.cs" />
@@ -75,6 +74,7 @@
     <Compile Include="Assets\Scripts\Entities\Enemy.cs" />
     <Compile Include="Assets\Scripts\MainMenuCamera.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjetsGenerator\Gun.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

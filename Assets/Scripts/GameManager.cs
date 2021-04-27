@@ -1,29 +1,23 @@
 ﻿using Assets.Scripts.Entities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-
-namespace Assets.Scripts.UI
+namespace Assets.Scripts
 {
-    public class InGameMenu : MonoBehaviour
+    public class GameManager : MonoBehaviour
     {
         [SerializeField]
         private GameObject[] fishCount;
         public static bool GameIsPaused;
         public Player Player;
         public GameObject PauseMenu;
-
         public GameObject GameOverScreen;
-
         public GameObject NextLevelScreen;
         [SerializeField] private readonly int initialScore = Score.Instance.Amount;
+
         public void Update()
         {
-            //переместить код в функцию
-            if (!GameIsPaused)
-            {
-                Score.Instance.TimeSpent = Time.timeSinceLevelLoad;
-            }
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 if (GameIsPaused)
@@ -42,10 +36,19 @@ namespace Assets.Scripts.UI
             }
 
             fishCount = GameObject.FindGameObjectsWithTag("Fish");
-    
-            if (fishCount.Length == 0)
+
+
+            if (SceneManager.GetActiveScene().name == "LastLevel" && fishCount.Length == 0)
             {
-                ShowNextLevelScreen();
+                ShowWinScreen();
+            }
+            else
+            {
+                if (fishCount.Length == 0)
+                {
+                    ShowNextLevelScreen();
+                }
+
             }
         }
 
@@ -106,20 +109,39 @@ namespace Assets.Scripts.UI
 
         public void ShowNextLevelScreen()
         {
+            if (Time.timeScale != 0)
+            {
+                Score.Instance.TimeSpent += Time.timeSinceLevelLoad;
+            }
             PauseMenu.SetActive(false);
             NextLevelScreen.SetActive(true);
             Time.timeScale = 0f;
             Cursor.lockState = CursorLockMode.None;
             GameIsPaused = true;
-            Debug.Log(Score.Instance.Fishkilled.ToString());
-            Debug.Log(Score.Instance.TimeSpent.ToString("0"));
-            Debug.Log(Score.Instance.Deaths.ToString());
         }
 
         public void ShowWinScreen()
         {
-
+            if (Time.timeScale != 0)
+            {
+                Score.Instance.TimeSpent += Time.timeSinceLevelLoad;
+            }
+            PauseMenu.SetActive(false);
+            NextLevelScreen.SetActive(true);
+            Time.timeScale = 0f;
+            Cursor.lockState = CursorLockMode.None;
+            GameIsPaused = true;
+            ShowStats();
         }
 
+        private void ShowStats()
+        {
+            var deaths = GameObject.Find("Deaths");
+            deaths.GetComponent<Text>().text = "Deaths: " + Score.Instance.Deaths;
+            var timeSpent = GameObject.Find("TimeSpent");
+            timeSpent.GetComponent<Text>().text = "Time spent: " + Score.Instance.TimeSpent;
+            var fishKilled = GameObject.Find("FishKilled");
+            fishKilled.GetComponent<Text>().text = "Fish killed: " + Score.Instance.Fishkilled;
+        }
     }
 }

@@ -26,10 +26,11 @@ namespace Assets.Scripts
                 instance = this;
                 DontDestroyOnLoad(this);
             }
+
             instance.Amount = 0;
-            instance.Deaths = 0;
-            instance.TimeSpent = 0;
             instance.Fishkilled = 0;
+            instance.TimeSpent = 0;
+            instance.Deaths = 0;
         }
     }
 }

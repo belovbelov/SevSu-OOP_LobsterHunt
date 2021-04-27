@@ -22,7 +22,7 @@ namespace Assets.Scripts
         {
             if (currentWeapon != null)
             {
-                if (!InGameMenu.GameIsPaused)
+                if (!GameManager.GameIsPaused)
                 {
                     if (Input.GetButtonDown("Fire1"))
                     {
