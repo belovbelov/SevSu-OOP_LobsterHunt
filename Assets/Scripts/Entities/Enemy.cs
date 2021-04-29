@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Entities
+namespace Lobster.Entities
 {
     public class Enemy : Fish
     {
 
         private int current;
         private int colliderCounter;
-        [SerializeField] 
+        [SerializeField]
         private float dist;
         private readonly float enemySpeed;
 
@@ -19,12 +19,12 @@ namespace Assets.Scripts.Entities
         }
         private void Start()
         {
-            MinSpeed = enemySpeed- MinSpeedBias;
+            MinSpeed = enemySpeed - MinSpeedBias;
             MaxSpeed = enemySpeed + MaxSpeedBias;
             CachedTransform = transform;
             Position = CachedTransform.position;
             Forward = CachedTransform.forward;
-            float startSpeed = (MinSpeed + MaxSpeed) / 2;
+            var startSpeed = (MinSpeed + MaxSpeed) / 2;
             Velocity = transform.forward * startSpeed;
             Target = Points[current];
         }

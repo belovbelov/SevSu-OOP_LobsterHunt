@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Entities
+namespace Lobster.Entities
 {
     public abstract class Creature : MonoBehaviour
     {

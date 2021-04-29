@@ -1,9 +1,9 @@
-﻿using Assets.Scripts.Entities;
+﻿using Lobster.Entities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace Assets.Scripts
+namespace Lobster
 {
     public class GameManager : MonoBehaviour
     {
@@ -14,7 +14,7 @@ namespace Assets.Scripts
         public GameObject PauseMenu;
         public GameObject GameOverScreen;
         public GameObject NextLevelScreen;
-        [SerializeField] private readonly int initialScore = Score.Instance.Amount;
+        private readonly int initialScore = Score.Instance.Amount;
 
         public void Update()
         {
@@ -41,14 +41,12 @@ namespace Assets.Scripts
             if (SceneManager.GetActiveScene().name == "LastLevel" && fishCount.Length == 0)
             {
                 ShowWinScreen();
+                return;
             }
-            else
-            {
-                if (fishCount.Length == 0)
-                {
-                    ShowNextLevelScreen();
-                }
 
+            if (fishCount.Length == 0)
+            {
+                ShowNextLevelScreen();
             }
         }
 
@@ -134,6 +132,7 @@ namespace Assets.Scripts
             ShowStats();
         }
 
+        // ReSharper disable Unity.PerformanceAnalysis
         private void ShowStats()
         {
             var deaths = GameObject.Find("Deaths");

@@ -1,7 +1,7 @@
-﻿using Assets.Scripts.Entities;
+﻿using Lobster.Entities;
 using UnityEngine;
 
-namespace Assets.Scripts
+namespace Lobster
 {
     public abstract class HeadBob
     {

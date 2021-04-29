@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Scripts.ScriptableObjetsGenerator
+namespace Lobster.ScriptableObjetsGenerator
 {
     [CreateAssetMenu(fileName = "New Gun", menuName = "Gun")]
 

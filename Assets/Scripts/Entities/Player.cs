@@ -1,7 +1,7 @@
-﻿using Assets.Scripts.UI;
+﻿using Lobster.UI;
 using UnityEngine;
 
-namespace Assets.Scripts.Entities
+namespace Lobster.Entities
 {
     public class Player : Creature
     {
@@ -50,21 +50,9 @@ namespace Assets.Scripts.Entities
         private Vector3 weaponOrigin;
 
         //weaponBob
-        public Vector3 WeaponParentCurrentPos
-        {
-            get => weaponParentCurrentPos;
-            set => weaponParentCurrentPos = value;
-        }
+        public Vector3 WeaponParentCurrentPos { get; set; }
 
-        private Vector3 weaponParentCurrentPos;
-
-        public Vector3 TargetWeaponBobPosition
-        {
-            get => targetWeaponBobPosition;
-            set => targetWeaponBobPosition = value;
-        }
-
-        private Vector3 targetWeaponBobPosition;
+        public Vector3 TargetWeaponBobPosition { get; set; }
 
         public float MovementCounter { get; set; }
 
@@ -77,7 +65,7 @@ namespace Assets.Scripts.Entities
         {
             baseFov = NormalCam.fieldOfView;
             weaponOrigin = WeaponParent.transform.localPosition;
-            weaponParentCurrentPos = weaponOrigin;
+            WeaponParentCurrentPos = weaponOrigin;
 
             IsBreathing = true;
             IsDead = false;
@@ -126,13 +114,13 @@ namespace Assets.Scripts.Entities
                 adjustedSpeed *= sprintModifier;
             }
 
-            Vector3 move = transform.right * velocity.x + transform.forward * velocity.z;
+            var move = transform.right * velocity.x + transform.forward * velocity.z;
             if (move.magnitude > 1)
             {
                 move.Normalize();
             }
 
-            Controller.Move(move * adjustedSpeed * Time.deltaTime);
+            Controller.Move(move * (adjustedSpeed * Time.deltaTime));
 
             if (isJumping)
             {
@@ -178,58 +166,20 @@ namespace Assets.Scripts.Entities
             var bob = CheckState();
 
             bob.DoHeadBob();
-            //Head Bob
-            /*if (!isGrounded && !isSwimming)
-            {
-                //airborne
-                HeadBob(idleCounter, 0.015f, 0.015f);
-                idleCounter += Time.deltaTime * 0.5f;
-                WeaponParent.localPosition = Vector3.MoveTowards(WeaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 2f * 0.2f);
-            }
-            else if (velocity.x == 0 && velocity.z == 0 || isSwimming)
-            {
-                //idling
-                HeadBob(idleCounter, 0.015f, 0.015f);
-                idleCounter += Time.deltaTime;
-                WeaponParent.localPosition = Vector3.MoveTowards(WeaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 2f * 0.1f);
-            }
-            else if (!isSwimming && !isSprinting && (velocity.x != 0 || velocity.z != 0))
-            { //walking
-                HeadBob(movementCounter, 0.015f, 0.015f);
-                movementCounter += Time.deltaTime * 5f;
-                WeaponParent.localPosition = Vector3.MoveTowards(WeaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 12f * 0.15f);
-            }
-            else
-            { //sprinting
-                HeadBob(movementCounter, 0.02f, 0.02f);
-                movementCounter += Time.deltaTime * 6.75f;
-                WeaponParent.localPosition = Vector3.MoveTowards(WeaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 12f * 0.25f);
-            }*/
         }
 
-        // private void HeadBob(float pZ, float pXIntensity, float pYIntensity)
-        // {
-        //     float tAimAdjust = 1f;
-        //     targetWeaponBobPosition = weaponParentCurrentPos + new Vector3(Mathf.Cos(pZ) * pXIntensity * tAimAdjust,
-        //         Mathf.Sin(pZ * 2) * pYIntensity * tAimAdjust, 0);
-        // }
         private void ChangeFov()
         {
             if (isSprinting)
             {
-                targetWeaponBobPosition.z -= 0.2f;
-                NormalCam.fieldOfView =
-                    Mathf.Lerp(NormalCam.fieldOfView, baseFov * SprintFovModifier, Time.deltaTime * 8f);
-            }
-            else
-            {
-                NormalCam.fieldOfView = Mathf.Lerp(NormalCam.fieldOfView, baseFov, Time.deltaTime * 8f);
-            }
-
+                NormalCam.fieldOfView = Mathf.Lerp(NormalCam.fieldOfView, baseFov * SprintFovModifier, Time.deltaTime * 8f);
+                return;
+            } 
+            NormalCam.fieldOfView = Mathf.Lerp(NormalCam.fieldOfView, baseFov, Time.deltaTime * 8f);
         }
 
         private HeadBob CheckState()
-        {
+        {//strategy pattern
             if (!isGrounded && !isSwimming)
             {
                 return new HeadBobJump(this);

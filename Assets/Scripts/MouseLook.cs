@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts
+namespace Lobster
 {
     public class MouseLook : MonoBehaviour
     {
         #region Variables
 
-        public float MouseSensetivity { get; set; } = 200f;
+        private float MouseSensetivity { get; set; } = 200f;
         public Transform PlayerBody;
         private float xRotation;
         private float mouseX;
@@ -20,7 +20,7 @@ namespace Assets.Scripts
         }
 
 
-        private void Update()
+        private void FixedUpdate()
         {
             mouseX = Input.GetAxis("Mouse X") * MouseSensetivity * Time.deltaTime;
             mouseY = Input.GetAxis("Mouse Y") * MouseSensetivity * Time.deltaTime;

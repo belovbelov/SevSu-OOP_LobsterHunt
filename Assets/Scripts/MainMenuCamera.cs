@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts
+namespace Lobster
 {
     public class MainMenuCamera : MonoBehaviour
     {

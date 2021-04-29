@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.BOIDS
+namespace Lobster.BOIDS
 {
     [CreateAssetMenu]
     public class BoidSettings : ScriptableObject {

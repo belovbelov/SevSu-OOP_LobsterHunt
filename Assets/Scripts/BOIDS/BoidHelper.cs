@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.BOIDS
+namespace Lobster.BOIDS
 {
     public static class BoidHelper
     {

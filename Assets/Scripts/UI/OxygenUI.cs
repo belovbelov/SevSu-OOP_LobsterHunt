@@ -1,11 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-using Assets.Scripts.Entities;
-
-namespace Assets.Scripts.UI
+namespace Lobster.UI
 {
     public class OxygenUI : MonoBehaviour
     {

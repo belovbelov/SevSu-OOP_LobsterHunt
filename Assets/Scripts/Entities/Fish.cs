@@ -1,10 +1,8 @@
-﻿using Assets.Scripts.BOIDS;
+﻿using Lobster.BOIDS;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace Assets.Scripts.Entities
+namespace Lobster.Entities
 {
     public class Fish : Creature
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.BOIDS
+namespace Lobster.BOIDS
 {
     public class Boid : MonoBehaviour
     {
@@ -11,7 +11,8 @@ namespace Assets.Scripts.BOIDS
         public Vector3 Position;
         [HideInInspector]
         public Vector3 Forward;
-        Vector3 velocity;
+
+        private Vector3 velocity;
 
         // To update:
         private Vector3 acceleration;

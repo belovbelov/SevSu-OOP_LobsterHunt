@@ -1,9 +1,8 @@
-﻿using Assets.Scripts.Entities;
-using Assets.Scripts.ScriptableObjetsGenerator;
-using Assets.Scripts.UI;
+﻿using Lobster.Entities;
+using Lobster.ScriptableObjetsGenerator;
 using UnityEngine;
 
-namespace Assets.Scripts
+namespace Lobster
 {
     public class Weapon : MonoBehaviour
     {

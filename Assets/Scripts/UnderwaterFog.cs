@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts
+namespace Lobster
 {
     public class UnderwaterFog : MonoBehaviour
     {
@@ -24,15 +24,7 @@ namespace Assets.Scripts
         private void Update()
         {
             if (WaterPlane == null) return;
-
-            // test the y position to see if it is under the plane
             SetFog(transform.position.y < WaterPlane.position.y + 0.425f);
-
-            // test fog according to the bounding box of the water "box")
-            // SetFog(waterPlane.gameObject.GetComponent<Renderer>().bounds.Contains(transform.position));
-
-            // using a plane that can be rotated
-            //SetFog(WaterPlane.InverseTransformPoint(transform.position).y < 0.425f);
         }
 
         void SetFog(bool underwater)
