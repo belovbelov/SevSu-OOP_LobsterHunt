@@ -21,7 +21,7 @@ namespace Lobster
         {
             if (currentWeapon != null)
             {
-                if (!GameManager.GameIsPaused)
+                if (!GameManager.Instance.GameIsPaused)
                 {
                     if (Input.GetButtonDown("Fire1"))
                     {
@@ -37,6 +37,7 @@ namespace Lobster
         }
         #region Private methods
 
+        // ReSharper disable Unity.PerformanceAnalysis
         private void Shoot()
         {
             if (Physics.Raycast(FpsCam.transform.position, FpsCam.transform.forward, out RaycastHit hit, Loadout[currentIndex].range))

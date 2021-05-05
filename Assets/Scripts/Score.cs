@@ -10,6 +10,8 @@ namespace Lobster
             get { return instance; }
         }
 
+        private Score() {}
+        
         public int Amount { get; set; }
         public int Fishkilled { get; set; }
         public float TimeSpent { get; set; }

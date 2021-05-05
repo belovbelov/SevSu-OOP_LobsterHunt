@@ -7,14 +7,35 @@ namespace Lobster
 {
     public class GameManager : MonoBehaviour
     {
+        private GameManager() {}
+        [SerializeField] private static GameManager instance;
+        [SerializeField] public static GameManager Instance
+        {
+            get { return instance;}
+        }
+        
         [SerializeField]
         private GameObject[] fishCount;
-        public static bool GameIsPaused;
+
+        public bool GameIsPaused;
         public Player Player;
         public GameObject PauseMenu;
         public GameObject GameOverScreen;
         public GameObject NextLevelScreen;
         private readonly int initialScore = Score.Instance.Amount;
+
+        private void Awake()
+        {
+            if (instance != null && instance != this)
+            {
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                instance = this;
+                DontDestroyOnLoad(this);
+            }
+        }
 
         public void Update()
         {
