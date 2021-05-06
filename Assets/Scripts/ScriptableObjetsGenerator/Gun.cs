@@ -8,7 +8,7 @@ namespace Lobster.ScriptableObjetsGenerator
     {
         public string gunName;
         public GameObject prefab;
-        public float damage;
+        public int damage;
         public float range;
         public float aimSpeed;
         public float recoil;

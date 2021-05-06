@@ -1,5 +1,6 @@
 ﻿using Lobster.Entities;
 using Lobster.ScriptableObjetsGenerator;
+using Lobster.Shop;
 using UnityEngine;
 
 namespace Lobster
@@ -12,6 +13,9 @@ namespace Lobster
         public Camera FpsCam;
         private GameObject currentWeapon;
         private int currentIndex;
+        
+        //костыль, надо делать что то
+        private bool ableToShoot;
         #endregion
         private void Start()
         {
@@ -19,9 +23,12 @@ namespace Lobster
         }
         private void Update()
         {
+            //жесть
+            ableToShoot = (!GameManager.Instance.GameIsPaused || GameManager.Instance.shop.ShopIsOpen) &&
+                          (GameManager.Instance.GameIsPaused || !GameManager.Instance.shop.ShopIsOpen);
             if (currentWeapon != null)
             {
-                if (!GameManager.Instance.GameIsPaused)
+                if (ableToShoot)
                 {
                     if (Input.GetButtonDown("Fire1"))
                     {
@@ -45,7 +52,7 @@ namespace Lobster
                 var target = hit.transform.GetComponent<Fish>();
                 if (target != null && target.InRange)
                 {
-                    target.TakeDamage(Loadout[currentIndex].damage);
+                    Score.Instance.UpdateScore(target.TakeDamage(Loadout[currentIndex].damage));
                 }
             }
 

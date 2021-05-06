@@ -11,8 +11,6 @@ namespace Lobster.Entities
         private float dist;
         private readonly float enemySpeed;
 
-        public Player Player;
-
         private Enemy()
         {
             enemySpeed = CreatureSpeed;
@@ -38,13 +36,13 @@ namespace Lobster.Entities
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.CompareTag("Player"))
+            if (other.gameObject.GetComponent<Player>() != null)
             {
                 colliderCounter += 1;
                 Target = other.gameObject.transform;
                 if (colliderCounter == 2)
                 {
-                    Player.IsDead = true;
+                    other.gameObject.GetComponent<Player>().IsDead = true;
 
                 }
             }
@@ -52,7 +50,7 @@ namespace Lobster.Entities
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.gameObject.CompareTag("Player"))
+            if (other.gameObject.GetComponent<Player>() != null)
             {
                 colliderCounter -= 1;
                 if (colliderCounter == 0)

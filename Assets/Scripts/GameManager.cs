@@ -1,6 +1,9 @@
 ﻿using Lobster.Entities;
+using Lobster.Shop;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Lobster
@@ -16,16 +19,19 @@ namespace Lobster
         
         [SerializeField]
         private GameObject[] fishCount;
-
+// костыль(то что паблик, решиит валера. Сделать ShopAlert синглтон?) -> 25 строчка в weapon 
+        [SerializeField] public ShopAlert shop;
+        private bool shopIsOpen;
+        private int initialScore;
         public bool GameIsPaused;
         public Player Player;
         public GameObject PauseMenu;
         public GameObject GameOverScreen;
-        public GameObject NextLevelScreen;
-        private readonly int initialScore = Score.Instance.Amount;
-
+        [FormerlySerializedAs("NextLevelScreen")] public GameObject EndLevelScreen;
+        
         private void Awake()
         {
+            initialScore = Score.Instance.Amount;
             if (instance != null && instance != this)
             {
                 Destroy(this.gameObject);
@@ -33,21 +39,39 @@ namespace Lobster
             else
             {
                 instance = this;
-                DontDestroyOnLoad(this);
             }
+            UpdateScore();
         }
 
         public void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (!shop.ShopIsOpen)
             {
-                if (GameIsPaused)
+                if (Input.GetKeyDown(KeyCode.Escape))
                 {
-                    Resume();
+                    if (GameIsPaused)
+                    {
+                        Resume();
+                    }
+                    else
+                    {
+                        Pause();
+                    }
                 }
-                else
+            }
+
+            if (shop.alertShop)
+            {
+                if (Input.GetKeyDown(KeyCode.E))
                 {
-                    Pause();
+                    if (!shop.ShopIsOpen)
+                    {
+                        shop.OpenShop();
+                    }
+                    else
+                    {
+                        shop.CloseShop();
+                    }
                 }
             }
 
@@ -85,7 +109,7 @@ namespace Lobster
             Cursor.lockState = CursorLockMode.Locked;
         }
 
-        private void Pause()
+        public void Pause()
         {
             PauseMenu.SetActive(true);
             Time.timeScale = 0f;
@@ -133,7 +157,7 @@ namespace Lobster
                 Score.Instance.TimeSpent += Time.timeSinceLevelLoad;
             }
             PauseMenu.SetActive(false);
-            NextLevelScreen.SetActive(true);
+            EndLevelScreen.SetActive(true);
             Time.timeScale = 0f;
             Cursor.lockState = CursorLockMode.None;
             GameIsPaused = true;
@@ -146,7 +170,7 @@ namespace Lobster
                 Score.Instance.TimeSpent += Time.timeSinceLevelLoad;
             }
             PauseMenu.SetActive(false);
-            NextLevelScreen.SetActive(true);
+            EndLevelScreen.SetActive(true);
             Time.timeScale = 0f;
             Cursor.lockState = CursorLockMode.None;
             GameIsPaused = true;
@@ -162,6 +186,11 @@ namespace Lobster
             timeSpent.GetComponent<Text>().text = "Time spent: " + Score.Instance.TimeSpent;
             var fishKilled = GameObject.Find("FishKilled");
             fishKilled.GetComponent<Text>().text = "Fish killed: " + Score.Instance.Fishkilled;
+        }
+        public static void UpdateScore()
+        {
+            var txt = GameObject.Find("ScoreText");
+            txt.GetComponent<TextMeshProUGUI>().text = "Score: " + Score.Instance.Amount;
         }
     }
 }

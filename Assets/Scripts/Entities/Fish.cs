@@ -6,8 +6,8 @@ namespace Lobster.Entities
 {
     public class Fish : Creature
     {
-        private float health = 50f;
-        private float initialHealth;
+        private int health = 50;
+        public int RewardAmount { get; set; }
         public bool InRange;
         protected Vector3 Position;
         protected Vector3 Forward;
@@ -44,9 +44,7 @@ namespace Lobster.Entities
 
         private void Awake()
         {
-            initialHealth = health;
-            var txt = GameObject.Find("ScoreText");
-            txt.GetComponent<TextMeshProUGUI>().text = "Score: " + Score.Instance.Amount;
+            RewardAmount = health;
         }
         private void Start()
         {
@@ -67,7 +65,7 @@ namespace Lobster.Entities
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.CompareTag("Player"))
+            if (other.gameObject.GetComponent<Player>() != null)
             {
                 InRange = true;
                 float PlayerDist,FishDist;
@@ -89,7 +87,7 @@ namespace Lobster.Entities
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.gameObject.CompareTag("Player"))
+            if (other.gameObject.GetComponent<Player>() != null)
             {
                 InRange = false;
                 Target = null;
@@ -156,27 +154,22 @@ namespace Lobster.Entities
 
             return Forward;
         }
-        public void TakeDamage(float amountDamage)
+        public int TakeDamage(int amountDamage)
         {
             health -= amountDamage;
             if (health <= 0f)
             {
-                Die();
+                return Die();
             }
+            return 0;
         }
-        public void Die()
+
+        private int Die()
         {
             //Дописать скрипт начисления очков+смерти объекта
             Destroy(gameObject);
-            UpdateScore();
+            return RewardAmount;
         }
 
-        private void UpdateScore()
-        {
-            Score.Instance.Amount += (int)initialHealth;
-            Score.Instance.Fishkilled += 1;
-            var txt = GameObject.Find("ScoreText");
-            txt.GetComponent<TextMeshProUGUI>().text = "Score: " + Score.Instance.Amount;
-        }
     }
 }

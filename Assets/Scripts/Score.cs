@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Lobster.Entities;
+using UnityEngine;
 
 namespace Lobster
 {
@@ -17,6 +18,14 @@ namespace Lobster
         public float TimeSpent { get; set; }
         public int Deaths { get; set; }
 
+        public void UpdateScore(int deltaValue)
+        {
+            if (deltaValue == 0) return;
+            Amount += deltaValue;
+            Fishkilled += 1;
+            GameManager.UpdateScore();
+        }
+        
         private void Awake()
         {
             if (instance != null && instance != this)
