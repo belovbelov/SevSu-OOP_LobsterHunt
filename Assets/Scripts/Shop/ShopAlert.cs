@@ -8,6 +8,7 @@ namespace Lobster.Shop
         public GameObject alertShopOb;
         public GameObject ShopMenuOb;
         public GameObject Oxygen;
+        public GameObject Shop;
         public bool alertShop;
         public bool ShopIsOpen;
         void Start()
@@ -16,6 +17,7 @@ namespace Lobster.Shop
             alertShopOb = GameObject.Find("AlertShop");
             ShopMenuOb = GameObject.FindGameObjectWithTag("ShopMenu");
             Oxygen = GameObject.FindGameObjectWithTag("Oxygen");
+            Shop = GameObject.Find("ShopManager");
             ShopMenuOb.SetActive(false);
             alertShopOb.SetActive(false);
         }
@@ -33,6 +35,7 @@ namespace Lobster.Shop
     
         public void OpenShop()
         {
+            //this.GetComponent<ShopManager>().money = Score.Instance.Amount;
             ShopMenuOb.SetActive(true);
             Oxygen.SetActive(false);
             ShopIsOpen = true;

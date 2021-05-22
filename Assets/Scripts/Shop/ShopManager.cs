@@ -19,7 +19,7 @@ namespace Lobster.Shop
 
         [SerializeField] private int money;
 
-    
+        
         public GameObject stats;
     
         void Start()
@@ -31,9 +31,11 @@ namespace Lobster.Shop
         public void FindObj()
         {
             stats = GameObject.Find("Stats1");
-            stats.transform.Find("MoneyValue").GetComponent<Text>().text = money.ToString();
+            stats.transform.Find("MoneyValue").GetComponent<Text>().text = Score.Instance.Amount.ToString();
         }
     
+        //public void GetMoney
+
         public void SetSpeed()
         {
             speedlvl++;
@@ -58,21 +60,21 @@ namespace Lobster.Shop
    
         public void PriceOxy(int value)
         {
-            money = money - value * priceOxy;
+            Score.Instance.Amount = Score.Instance.Amount - value * priceOxy;
             priceOxy++;
-            stats.transform.Find("MoneyValue").GetComponent<Text>().text = money.ToString();
+            stats.transform.Find("MoneyValue").GetComponent<Text>().text = Score.Instance.Amount.ToString();
         }
         public void PriceSpeed(int value)
         {
-            money = money - value * priceSpeed;
+            Score.Instance.Amount = Score.Instance.Amount - value * priceSpeed;
             priceSpeed++;
-            stats.transform.Find("MoneyValue").GetComponent<Text>().text = money.ToString();
+            stats.transform.Find("MoneyValue").GetComponent<Text>().text = Score.Instance.Amount.ToString();
         }
         public void PriceWeapon(int value)
         {
-            money = money - value * priceWeapon;
+            Score.Instance.Amount = Score.Instance.Amount - value * priceWeapon;
             priceWeapon++;
-            stats.transform.Find("MoneyValue").GetComponent<Text>().text = money.ToString();
+            stats.transform.Find("MoneyValue").GetComponent<Text>().text = Score.Instance.Amount.ToString();
         }
 
 
