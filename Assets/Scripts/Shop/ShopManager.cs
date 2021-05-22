@@ -19,7 +19,7 @@ namespace Lobster.Shop
 
         [SerializeField] private int money;
 
-        
+        public GameObject WeaponBar;
         public GameObject stats;
     
         void Start()
@@ -49,6 +49,7 @@ namespace Lobster.Shop
         
             stats.transform.Find("Weaponlvl").GetComponent<Text>().text = weaponlvl.ToString();
             weapon = weaponlvl;
+            WeaponBar.GetComponent<Image>().sprite = Resources.Load<Sprite>("harpon2");
         }
         public void SetOxy()
         {

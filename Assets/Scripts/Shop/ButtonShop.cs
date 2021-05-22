@@ -27,6 +27,14 @@ namespace Lobster.Shop
                         btn.onClick.AddListener(() => shopManager.SetWeap());
                         btn.onClick.AddListener(() => shopManager.PriceWeapon(25));
                         break;
+                    case "OxygenBar":  // Смена текстур в отдельный класс
+                        break;
+                    case "SpeedBar":
+                        break;
+                    case "WeaponBar":
+                        btn.GetComponent<Image>().sprite = Resources.Load<Sprite>("harpon1");
+                        shopManager.WeaponBar=btn.gameObject;
+                        break;
                     default:
                         break;
                 }

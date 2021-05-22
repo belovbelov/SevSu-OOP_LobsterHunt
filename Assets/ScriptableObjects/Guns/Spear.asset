@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Spear
   m_EditorClassIdentifier: 
   gunName: Spear
-  prefab: {fileID: 3389744771166780386, guid: f9ad23ac00860ca4bbe95dd94666d92e, type: 3}
+  prefab: {fileID: 919132149155446097, guid: d5882329dd515de41929056a7cb04dc2, type: 3}
   damage: 25
   range: 4
   aimSpeed: 5
