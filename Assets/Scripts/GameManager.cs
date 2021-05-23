@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Lobster.Entities;
 using Lobster.Shop;
 using TMPro;
@@ -9,7 +10,7 @@ using UnityEngine.UI;
 
 namespace Lobster
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : MonoBehaviour, ILoadable
     {
         private GameManager() {}
         [SerializeField] private static GameManager instance;
@@ -28,7 +29,11 @@ namespace Lobster
         public GameObject PauseMenu;
         public GameObject GameOverScreen;
         [FormerlySerializedAs("NextLevelScreen")] public GameObject EndLevelScreen;
-        
+
+        public Animator animator;
+        float transitionTime = 2f;
+        private static readonly int Start1 = Animator.StringToHash("Start");
+
         private void Awake()
         {
             if (instance != null && instance != this)
@@ -125,7 +130,7 @@ namespace Lobster
 
         public void LoadMenu()
         {
-            SceneManager.LoadScene("MainMenu");
+            StartCoroutine(LoadLevel(0));
         }
 
         public void QuitGame()
@@ -135,8 +140,11 @@ namespace Lobster
 
         public void LoadNextLevel()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            Time.timeScale = 1f;
+            StopAllCoroutines();
+            StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
         }
+
 
         public void ShowGameOverScreen()
         {
@@ -153,7 +161,8 @@ namespace Lobster
             Score.Instance.Deaths += 1;
             GameOverScreen.SetActive(false);
             GameIsPaused = false;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            StopAllCoroutines();
+            StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex));
         }
 
         public void ShowNextLevelScreen()
@@ -183,6 +192,12 @@ namespace Lobster
             ShowStats();
         }
 
+        public IEnumerator LoadLevel(int levelIndex)
+        {
+            animator.SetTrigger("Start");
+            yield return new WaitForSecondsRealtime(transitionTime);
+            SceneManager.LoadScene(levelIndex);
+        }
         // ReSharper disable Unity.PerformanceAnalysis
         private void ShowStats()
         {
