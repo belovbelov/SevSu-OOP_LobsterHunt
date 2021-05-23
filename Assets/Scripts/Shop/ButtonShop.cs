@@ -16,16 +16,13 @@ namespace Lobster.Shop
                 switch (btn.gameObject.name)
                 {
                     case "Speed1":
-                        btn.onClick.AddListener(() => shopManager.SetSpeed());
-                        btn.onClick.AddListener(() => shopManager.PriceSpeed(25));
+                        btn.onClick.AddListener(() => shopManager.UpdateSpeedLevel());
                         break;
                     case "Oxygen1":
-                        btn.onClick.AddListener(() => shopManager.SetOxy());
-                        btn.onClick.AddListener(() => shopManager.PriceOxy(25));
+                        btn.onClick.AddListener(() => shopManager.UpdateOxyLevel());
                         break;
                     case "Weapon1":
-                        btn.onClick.AddListener(() => shopManager.SetWeap());
-                        btn.onClick.AddListener(() => shopManager.PriceWeapon(25));
+                        btn.onClick.AddListener(() => shopManager.UpdateWeaponLevel());
                         break;
                     case "OxygenBar":  // Смена текстур в отдельный класс
                         break;

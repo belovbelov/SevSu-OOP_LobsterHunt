@@ -10,20 +10,19 @@ namespace Lobster.Shop
         [SerializeField] private int oxylvl=0;
         [SerializeField] private int speedlvl=0;
         [SerializeField] private int weaponlvl=0;
-        [SerializeField] private int priceOxyMultiplier=1;
-        [SerializeField] private int priceSpeedMultiplier=1;
-        [SerializeField] private int priceWeaponMultiplier=1;
+        [SerializeField] private int priceOxy=25;
+        [SerializeField] private int priceSpeed=25;
+        [SerializeField] private int priceWeapon=25;
 
 
-        [SerializeField] private int money;
         [SerializeField] private Player player;
+        [SerializeField] public GameObject WeaponBar;
 
     
         public GameObject stats;
     
         void Start()
         {
-        
             player = GameObject.Find("Player").GetComponent<Player>();
         }
         public void FindObj()
@@ -45,6 +44,7 @@ namespace Lobster.Shop
         
             stats.transform.Find("Weaponlvl").GetComponent<Text>().text = weaponlvl.ToString();
             //weapon = weaponlvl;
+            WeaponBar.GetComponent<Image>().sprite = Resources.Load<Sprite>("harpoon" + weaponlvl);
         }
         public void SetOxy()
         {
@@ -54,29 +54,55 @@ namespace Lobster.Shop
             player.OxygenReduceRate *= oxylvl;
         }
    
-        public void PriceOxy(int value)
+        public void PriceOxy()
         {
-            var price = value * priceOxyMultiplier;
-            Score.Instance.Amount -= price;
-            priceOxyMultiplier++;
+            Score.Instance.Amount -= priceOxy;
+            priceOxy+= priceOxy;
             stats.transform.Find("MoneyValue").GetComponent<Text>().text = Score.Instance.Amount.ToString();
+            GameObject.Find("Oxygen1").GetComponentInChildren<Text>().text = "Up\n" + priceOxy;
         }
-        public void PriceSpeed(int value)
+        public void PriceSpeed()
         {
-            var price = value * priceSpeedMultiplier;
-            Score.Instance.Amount -= price;
-            priceSpeedMultiplier++;
+            Score.Instance.Amount -= priceSpeed;
+            priceSpeed+= priceSpeed;
             stats.transform.Find("MoneyValue").GetComponent<Text>().text = Score.Instance.Amount.ToString();
+            GameObject.Find("Speed1").GetComponentInChildren<Text>().text = "Up\n" + priceSpeed;
         }
-        public void PriceWeapon(int value)
+        public void PriceWeapon()
         {
-            var price = value * priceWeaponMultiplier;
-            Score.Instance.Amount -= price;
-            priceWeaponMultiplier++;
+            Score.Instance.Amount -= priceWeapon;
+            priceWeapon+= priceWeapon;
             stats.transform.Find("MoneyValue").GetComponent<Text>().text = Score.Instance.Amount.ToString();
+            GameObject.Find("Weapon1").GetComponentInChildren<Text>().text = "Up\n" + priceWeapon;
         }
 
-
-
+        public void UpdateSpeedLevel()
+        {
+            if (Score.Instance.Amount < 1)
+            {
+                return;
+            }
+            SetSpeed();
+            PriceSpeed();
+        }
+        public void UpdateOxyLevel()
+        {
+            if (Score.Instance.Amount < 1)
+            {
+                return;
+            }
+            SetOxy();
+            PriceOxy();
+        }
+        
+        public void UpdateWeaponLevel()
+        {
+            if (Score.Instance.Amount < 1)
+            {
+                return;
+            }
+            SetWeap();
+            PriceWeapon();
+        }
     }
 }
