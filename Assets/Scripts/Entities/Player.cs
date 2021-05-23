@@ -72,6 +72,8 @@ namespace Lobster.Entities
 
             IsBreathing = true;
             IsDead = false;
+            SwimModifier *= Score.Instance.Speed;
+            OxygenReduceRate *= Score.Instance.Oxygen;
         }
 
         private void Update()

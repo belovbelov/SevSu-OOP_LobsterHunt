@@ -18,7 +18,6 @@ namespace Lobster
         {
             get { return instance;}
         }
-        
         [SerializeField]
         private GameObject[] fishCount;
 // костыль(то что паблик, решиит валера. Сделать ShopAlert синглтон?) -> 25 строчка в weapon 
@@ -31,19 +30,19 @@ namespace Lobster
         [FormerlySerializedAs("NextLevelScreen")] public GameObject EndLevelScreen;
 
         public Animator animator;
-        float transitionTime = 2f;
-        private static readonly int Start1 = Animator.StringToHash("Start");
-
+        private float transitionTime = 2f;
+        public int nextLevelThershold = 2;
         private void Awake()
         {
             if (instance != null && instance != this)
             {
-                Destroy(this.gameObject);
+                //Destroy(this.gameObject);
             }
             else
             {
                 instance = this;
                 instance.initialScore = Score.Instance.Amount;
+                //DontDestroyOnLoad(this);
             }
         }
 
@@ -91,18 +90,15 @@ namespace Lobster
                 ShowGameOverScreen();
             }
 
-            fishCount = GameObject.FindGameObjectsWithTag("Fish");
 
-
-            if (SceneManager.GetActiveScene().name == "LastLevel" && fishCount.Length == 0)
-            {
-                ShowWinScreen();
-                return;
-            }
-
-            if (fishCount.Length == 0)
+            if (nextLevelThershold * 3 == ShopManager.LevelsSum())
             {
                 ShowNextLevelScreen();
+            }
+
+            if (SceneManager.GetActiveScene().name == "LastLevel")
+            {
+               ShowWinScreen();
             }
         }
 
@@ -140,8 +136,9 @@ namespace Lobster
 
         public void LoadNextLevel()
         {
-            Time.timeScale = 1f;
+            nextLevelThershold++;
             StopAllCoroutines();
+            instance.initialScore = Score.Instance.Amount;
             StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
         }
 
@@ -159,23 +156,26 @@ namespace Lobster
         {
             Score.Instance.Amount = initialScore;
             Score.Instance.Deaths += 1;
-            GameOverScreen.SetActive(false);
-            GameIsPaused = false;
+            GameOverScreen.SetActive(false); GameIsPaused = false;
             StopAllCoroutines();
             StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex));
         }
 
         public void ShowNextLevelScreen()
         {
-            if (Time.timeScale != 0)
+            if (!GameIsPaused)
             {
                 Score.Instance.TimeSpent += Time.timeSinceLevelLoad;
+                Debug.Log(Score.Instance.TimeSpent);
             }
+
+            shop.ShopMenuOb.SetActive(false);
             PauseMenu.SetActive(false);
             EndLevelScreen.SetActive(true);
             Time.timeScale = 0f;
             Cursor.lockState = CursorLockMode.None;
             GameIsPaused = true;
+            shop.ShopIsOpen = false;
         }
 
         public void ShowWinScreen()
@@ -201,6 +201,7 @@ namespace Lobster
         // ReSharper disable Unity.PerformanceAnalysis
         private void ShowStats()
         {
+            Debug.Log(Score.Instance.Amount);
             var deaths = GameObject.Find("Deaths");
             deaths.GetComponent<Text>().text = "Deaths: " + Score.Instance.Deaths;
             var timeSpent = GameObject.Find("TimeSpent");

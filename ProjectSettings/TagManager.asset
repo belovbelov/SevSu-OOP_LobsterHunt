@@ -10,6 +10,7 @@ TagManager:
   - Oxygen
   - ShopManager
   - Stats
+  - FishRoute
   layers:
   - Default
   - TransparentFX
