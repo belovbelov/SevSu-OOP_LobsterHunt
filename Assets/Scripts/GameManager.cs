@@ -1,4 +1,5 @@
-﻿using Lobster.Entities;
+﻿using System;
+using Lobster.Entities;
 using Lobster.Shop;
 using TMPro;
 using UnityEngine;
@@ -21,7 +22,6 @@ namespace Lobster
         private GameObject[] fishCount;
 // костыль(то что паблик, решиит валера. Сделать ShopAlert синглтон?) -> 25 строчка в weapon 
         [SerializeField] public ShopAlert shop;
-        private bool shopIsOpen;
         private int initialScore;
         public bool GameIsPaused;
         public Player Player;
@@ -31,7 +31,6 @@ namespace Lobster
         
         private void Awake()
         {
-            initialScore = Score.Instance.Amount;
             if (instance != null && instance != this)
             {
                 Destroy(this.gameObject);
@@ -39,8 +38,15 @@ namespace Lobster
             else
             {
                 instance = this;
+                instance.initialScore = Score.Instance.Amount;
             }
+        }
+
+        private void Start()
+        {
             UpdateScore();
+            shop = GameObject.Find("ShopManager").GetComponent<ShopAlert>();
+            Player = GameObject.Find("Player").GetComponent<Player>();
         }
 
         public void Update()

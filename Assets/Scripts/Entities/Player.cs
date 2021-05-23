@@ -1,4 +1,5 @@
-﻿using Lobster.UI;
+﻿using System;
+using Lobster.UI;
 using UnityEngine;
 
 namespace Lobster.Entities
@@ -17,6 +18,8 @@ namespace Lobster.Entities
         public LayerMask GroundMask;
         [SerializeField] private readonly float jumpHeight = 1f;
         [SerializeField] private readonly float sprintModifier = 2f;
+        [SerializeField] public float SwimModifier = 0.75f;
+        [SerializeField] public float OxygenReduceRate = 30.0f;
 
         private Vector3 velocity;
         public Transform WaterCheck;
@@ -35,7 +38,7 @@ namespace Lobster.Entities
         private bool isSwimming;
         private bool isArising;
         private bool isCrouching;
-        private float adjustedSpeed;
+        [SerializeField]private float adjustedSpeed;
         public bool IsBreathing { get; set; }
         public bool IsDead { get; set; }
 
@@ -76,9 +79,8 @@ namespace Lobster.Entities
             Move();
         }
 
-        public override void Move()
+        private void FixedUpdate()
         {
-            //Axles
             velocity.x = Input.GetAxis("Horizontal");
             velocity.z = Input.GetAxis("Vertical");
 
@@ -88,19 +90,21 @@ namespace Lobster.Entities
             jump = Input.GetButton("Jump");
             crouch = Input.GetKey(KeyCode.LeftShift);
 
+        }
 
+        public override void Move()
+        {
             //States
             isSprinting = sprint && velocity.z > 0;
             isGrounded = Physics.CheckSphere(GroundCheck.position, groundDistance, GroundMask);
             isJumping = jump && isGrounded;
-
             isSwimming = WaterCheck.position.y > GroundCheck.transform.position.y;
             canBreathe = WaterCheck.position.y < NormalCam.transform.position.y;
             isArising = jump && isSwimming;
             isCrouching = crouch && isSwimming && !isArising;
 
-            IsBreathing = (1 - timeUnderWater / 30.0f) > 0;
-            Slider.SetSlider(1 - timeUnderWater / 30.0f);
+            IsBreathing = (1 - timeUnderWater / OxygenReduceRate) > 0;
+            Slider.SetSlider(1 - timeUnderWater / OxygenReduceRate);
 
             //Movement
             if (isGrounded && velocity.y < 0)
@@ -109,6 +113,10 @@ namespace Lobster.Entities
             }
 
             adjustedSpeed = playerSpeed;
+            if (isSwimming)
+            {
+                adjustedSpeed *= SwimModifier;
+            }
             if (isSprinting)
             {
                 adjustedSpeed *= sprintModifier;
@@ -131,6 +139,11 @@ namespace Lobster.Entities
             {
                 timeUnderWater += Time.deltaTime;
             }
+            else
+            {
+                timeUnderWater = timeUnderWater > 0 ? timeUnderWater -= 0.025f : timeUnderWater = 0;
+                velocity.y += gravity * Time.deltaTime;
+            }
 
             if (isSwimming)
             {
@@ -138,23 +151,17 @@ namespace Lobster.Entities
                 velocity.y = Mathf.Lerp(velocity.y, -2.0f, Time.deltaTime * 6.0f);
                 if (isArising && timeToFloat > 0.1f)
                 {
-                    velocity.y = Mathf.Lerp(velocity.y, Mathf.Sqrt(-gravity * 3.0f), Time.deltaTime * 8.0f);
+                    velocity.y = Mathf.Lerp(velocity.y, Mathf.Sqrt(-gravity * 3.0f)*SwimModifier, Time.deltaTime * 8.0f);
                 }
 
                 if (isCrouching)
                 {
-                    velocity.y = Mathf.Lerp(velocity.y, -Mathf.Sqrt(-gravity * 4.0f), Time.deltaTime * 8.0f);
+                    velocity.y = Mathf.Lerp(velocity.y, -Mathf.Sqrt(-gravity * 4.0f)*SwimModifier, Time.deltaTime * 8.0f);
                 }
             }
             else
             {
                 timeToFloat = 0f;
-            }
-
-            if (canBreathe)
-            {
-                timeUnderWater = Mathf.Lerp(timeUnderWater, 0.0f, Time.deltaTime * 0.5f);
-                velocity.y += gravity * Time.deltaTime;
             }
 
             Controller.Move(velocity * Time.deltaTime);
