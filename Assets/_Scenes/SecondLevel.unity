@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 0
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 2191bd0cd01814749840ace595bbd158, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 2bd8959f5fbd3644aa33af1a155fc147, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1974391868}
-  m_IndirectSpecularColor: {r: 0.25781772, g: 0.47104493, b: 0.97968936, a: 1}
+  m_IndirectSpecularColor: {r: 0.07052275, g: 0.35373604, b: 0.97078824, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3756,10 +3756,9 @@ MonoBehaviour:
   oxylvl: 0
   speedlvl: 0
   weaponlvl: 0
-  priceOxyMultiplier: 1
-  priceSpeedMultiplier: 1
-  priceWeaponMultiplier: 1
-  money: 0
+  priceOxy: 25
+  priceSpeed: 25
+  priceWeapon: 25
   player: {fileID: 0}
   WeaponBar: {fileID: 0}
   stats: {fileID: 0}
