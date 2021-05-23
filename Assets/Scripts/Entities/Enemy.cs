@@ -67,7 +67,7 @@ namespace Lobster.Entities
             dist = Vector3.Distance(transform.position, Points[current].position);
             if (dist < 5)
             {
-                current = (current + 1) % Points.Length;
+                current = (current + 1) % Points.Count;
                 Target = Points[current];
             }
         }

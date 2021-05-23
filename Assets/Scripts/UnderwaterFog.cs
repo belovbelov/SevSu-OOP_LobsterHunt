@@ -29,7 +29,7 @@ namespace Lobster
 
         void SetFog(bool underwater)
         {
-            //RenderSettings.fog = underwater ? true : defaultFog;
+            RenderSettings.fog = underwater ? true : defaultFog;
             RenderSettings.fogMode = underwater ? FogMode.Exponential : FogMode.Linear;
             if (underwater)
             {

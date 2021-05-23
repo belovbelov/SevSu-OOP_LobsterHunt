@@ -29,7 +29,7 @@ namespace Lobster.Shop
                     case "SpeedBar":
                         break;
                     case "WeaponBar":
-                        btn.GetComponent<Image>().sprite = Resources.Load<Sprite>("harpon1");
+                        btn.GetComponent<Image>().sprite = Resources.Load<Sprite>("harpoon1");
                         shopManager.WeaponBar=btn.gameObject;
                         break;
                     default:

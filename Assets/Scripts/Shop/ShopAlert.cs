@@ -37,7 +37,7 @@ namespace Lobster.Shop
         {
             //this.GetComponent<ShopManager>().money = Score.Instance.Amount;
             ShopMenuOb.SetActive(true);
-            Oxygen.SetActive(false);
+            //Oxygen.SetActive(false);
             ShopIsOpen = true;
             alertShopOb.SetActive(false);
             this.GetComponent<ShopManager>().FindObj();
@@ -48,7 +48,7 @@ namespace Lobster.Shop
         public void CloseShop()
         {
             ShopMenuOb.SetActive(false);
-            Oxygen.SetActive(true);
+            //Oxygen.SetActive(true);
             ShopIsOpen = false;
             alertShopOb.SetActive(true);
             Time.timeScale = 1f;

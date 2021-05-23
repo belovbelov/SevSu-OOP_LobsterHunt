@@ -1,4 +1,5 @@
-﻿using Lobster.BOIDS;
+﻿using System.Collections.Generic;
+using Lobster.BOIDS;
 using TMPro;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ namespace Lobster.Entities
 {
     public class Fish : Creature
     {
-        private int health = 50;
+        private int health;
         public int RewardAmount { get; set; }
         public bool InRange;
         protected Vector3 Position;
@@ -35,7 +36,7 @@ namespace Lobster.Entities
         protected float MaxSpeed;
         protected float MinSpeed;
         [SerializeField]
-        protected Transform[] Points;
+        protected List<Transform> Points;
 
         protected Fish()
         {
@@ -44,7 +45,13 @@ namespace Lobster.Entities
 
         private void Awake()
         {
+            health = Random.Range(50, 200);
             RewardAmount = health;
+            var PointsObjects = GameObject.FindGameObjectsWithTag("FishRoute");
+            foreach (var point in PointsObjects)
+            {
+                Points.Add(point.transform);
+            }
         }
         private void Start()
         {
@@ -71,7 +78,7 @@ namespace Lobster.Entities
                 float PlayerDist,FishDist;
                 float maxdist = 0;
                 int idist = 0;
-                for (int i = 0; i < Points.Length; i++)
+                for (int i = 0; i < Points.Count; i++)
                 {
                     PlayerDist = Vector3.Distance(other.gameObject.transform.position, Points[i].position);
                     FishDist = Vector3.Distance(transform.position, Points[i].position);
