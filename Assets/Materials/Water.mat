@@ -90,7 +90,7 @@ Material:
     - _Cull: 2
     - _Cutoff: 0.5
     - _Depth: 0
-    - _Displacement: 1.25
+    - _Displacement: 1.03
     - _DstBlend: 0
     - _EnvironmentReflections: 1
     - _FoamDistance: -0.5

@@ -48,14 +48,16 @@ namespace Lobster
             if (instance != null && instance != this)
             {
                 Destroy(this.gameObject);
+                return;
             }
             else
             {
                 instance = this;
                 DontDestroyOnLoad(this);
+                Zeros();
+                
             }
-            Zeros();
-            instance.Amount = 10000;
+            instance.Amount = 10000;          
         }
     }
 }

@@ -188,7 +188,6 @@ namespace Lobster
             if (!GameIsPaused)
             {
                 StartCoroutine(EndingTransition());
-                Score.Instance.TimeSpent += Time.timeSinceLevelLoad;
             }
         }
 

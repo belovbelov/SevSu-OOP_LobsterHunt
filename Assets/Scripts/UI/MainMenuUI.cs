@@ -13,7 +13,6 @@ namespace Lobster.UI
 
         public void PlayGame()
         {
-            Score.Instance.Zeros();
             StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
         }
 

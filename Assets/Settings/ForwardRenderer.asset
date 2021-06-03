@@ -23,7 +23,7 @@ MonoBehaviour:
         m_Bits: 16
       PassNames: []
     overrideMaterial: {fileID: 2100000, guid: 3bb4144be28d38b4a95dd07fbbf4cbf0, type: 2}
-    overrideMaterialPassIndex: 0
+    overrideMaterialPassIndex: 6
     overrideDepthState: 1
     depthCompareFunction: 4
     enableWrite: 1

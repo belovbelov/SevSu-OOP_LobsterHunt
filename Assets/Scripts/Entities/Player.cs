@@ -38,6 +38,7 @@ namespace Lobster.Entities
         private bool isSwimming;
         private bool isArising;
         private bool isCrouching;
+        private float oxygenRecoveryRate=0.05f;
         [SerializeField]private float adjustedSpeed;
         public bool IsBreathing { get; set; }
         public bool IsDead { get; set; }
@@ -143,7 +144,7 @@ namespace Lobster.Entities
             }
             else
             {
-                timeUnderWater = timeUnderWater > 0 ? timeUnderWater -= 0.025f : timeUnderWater = 0;
+                timeUnderWater = timeUnderWater > 0 ? timeUnderWater -= oxygenRecoveryRate : timeUnderWater = 0;
                 velocity.y += gravity * Time.deltaTime;
             }
 
