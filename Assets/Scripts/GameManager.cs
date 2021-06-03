@@ -29,7 +29,7 @@ namespace Lobster
         public GameObject GameOverScreen;
         [FormerlySerializedAs("NextLevelScreen")] public GameObject EndLevelScreen;
 
-        public Animator animator;
+        public Animator[] animators;
         public float transitionTime = 2f;
         public int nextLevelThershold = 2;
         private void Awake()
@@ -55,50 +55,52 @@ namespace Lobster
 
         public void Update()
         {
-            if (!shop.ShopIsOpen)
+            if (Treasure.isFound)
             {
-                if (Input.GetKeyDown(KeyCode.Escape))
+                ShowWinScreen();
+            }
+            else
+            {
+                if (!shop.ShopIsOpen)
                 {
-                    if (GameIsPaused)
+                    if (Input.GetKeyDown(KeyCode.Escape))
                     {
-                        Resume();
-                    }
-                    else
-                    {
-                        Pause();
+                        if (GameIsPaused)
+                        {
+                            Resume();
+                        }
+                        else
+                        {
+                            Pause();
+                        }
                     }
                 }
-            }
 
-            if (shop.alertShop)
-            {
-                if (Input.GetKeyDown(KeyCode.E))
+                if (shop.alertShop)
                 {
-                    if (!shop.ShopIsOpen)
+                    if (Input.GetKeyDown(KeyCode.E))
                     {
-                        shop.OpenShop();
-                    }
-                    else
-                    {
-                        shop.CloseShop();
+                        if (!shop.ShopIsOpen)
+                        {
+                            shop.OpenShop();
+                        }
+                        else
+                        {
+                            shop.CloseShop();
+                        }
                     }
                 }
-            }
 
-            if (!Player.IsBreathing || Player.IsDead)
-            {
-                ShowGameOverScreen();
-            }
+                if (!Player.IsBreathing || Player.IsDead)
+                {
+                    ShowGameOverScreen();
+                }
 
 
-            if (nextLevelThershold * 3 == ShopManager.LevelsSum())
-            {
-                ShowNextLevelScreen();
-            }
-
-            if (ShopManager.LevelsSum() == 12)
-            {
-               ShowWinScreen();
+                if (nextLevelThershold * 3 == ShopManager.LevelsSum())
+                {
+                    ShowNextLevelScreen();
+                }
             }
         }
 
@@ -179,25 +181,33 @@ namespace Lobster
 
         public void ShowWinScreen()
         {
+
+                shop.ShopMenuOb.SetActive(false);
+                PauseMenu.SetActive(false);
+                EndLevelScreen.SetActive(true);
             if (!GameIsPaused)
             {
+                StartCoroutine(EndingTransition());
                 Score.Instance.TimeSpent += Time.timeSinceLevelLoad;
             }
-            shop.ShopMenuOb.SetActive(false);
-            PauseMenu.SetActive(false);
-            EndLevelScreen.SetActive(true);
+        }
+
+        public IEnumerator LoadLevel(int levelIndex)
+        {
+            animators[0].SetTrigger("Start");
+            yield return new WaitForSecondsRealtime(transitionTime);
+            SceneManager.LoadScene(levelIndex);
+        }
+
+        public IEnumerator EndingTransition()
+        {
+            animators[1].SetTrigger("EndGame");
+            yield return new WaitForSecondsRealtime(transitionTime);
             Time.timeScale = 0f;
             Cursor.lockState = CursorLockMode.None;
             GameIsPaused = true;
             shop.ShopIsOpen = false;
             ShowStats();
-        }
-
-        public IEnumerator LoadLevel(int levelIndex)
-        {
-            animator.SetTrigger("Start");
-            yield return new WaitForSecondsRealtime(transitionTime);
-            SceneManager.LoadScene(levelIndex);
         }
         // ReSharper disable Unity.PerformanceAnalysis
         private void ShowStats()

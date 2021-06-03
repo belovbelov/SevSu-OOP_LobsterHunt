@@ -1289,8 +1289,9 @@ MonoBehaviour:
   PauseMenu: {fileID: 1445496231}
   GameOverScreen: {fileID: 621077162}
   EndLevelScreen: {fileID: 193864780}
-  animator: {fileID: 1192500169}
-  transitionTime: 4
+  animators:
+  - {fileID: 1192500169}
+  transitionTime: 3
   nextLevelThershold: 3
 --- !u!1 &326934254
 GameObject:

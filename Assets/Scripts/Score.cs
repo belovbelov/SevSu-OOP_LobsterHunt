@@ -53,15 +53,9 @@ namespace Lobster
             {
                 instance = this;
                 DontDestroyOnLoad(this);
-
-            instance.Amount = 0;
-            instance.Fishkilled = 0;
-            instance.TimeSpent = 0;
-            instance.Deaths = 0;
-            instance.Oxygen = 1;
-            instance.Weapon = 1;
-            instance.Speed = 1;
             }
+            Zeros();
+            instance.Amount = 10000;
         }
     }
 }
