@@ -30,9 +30,9 @@ namespace Lobster.Shop
         {
             stats = GameObject.Find("Stats1");
             stats.transform.Find("MoneyValue").GetComponent<Text>().text = Score.Instance.Amount.ToString();
-            stats.transform.Find("Speedlvl").GetComponent<Text>().text = speedlvl.ToString();
-            stats.transform.Find("Weaponlvl").GetComponent<Text>().text = weaponlvl.ToString();
-            stats.transform.Find("Oxygenlvl").GetComponent<Text>().text = oxylvl.ToString();
+            stats.transform.Find("Speedlvl").GetComponent<Text>().text = Score.Instance.Speed.ToString();
+            stats.transform.Find("Weaponlvl").GetComponent<Text>().text = Score.Instance.Weapon.ToString();
+            stats.transform.Find("Oxygenlvl").GetComponent<Text>().text = Score.Instance.Oxygen.ToString();
         }
     
         public void SetSpeed()
