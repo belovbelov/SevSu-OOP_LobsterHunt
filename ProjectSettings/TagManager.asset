@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Fish
+  - EndOfLevel
+  - ShopMenu
+  - Oxygen
+  - ShopManager
+  - Stats
+  - FishRoute
   layers:
   - Default
   - TransparentFX
@@ -18,7 +25,7 @@ TagManager:
   - Menu
   - Player
   - BOIDS Wall
-  - 
+  - post
   - 
   - 
   - 

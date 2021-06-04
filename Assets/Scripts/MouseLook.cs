@@ -1,37 +1,35 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts
+namespace Lobster
 {
     public class MouseLook : MonoBehaviour
     {
         #region Variables
 
-        public float mouseSensetivity = 400f;
-        public Transform playerBody;
-        float xRotation = 0f;
-        float mouseX;
-        float mouseY;
-
+        private float MouseSensetivity { get; set; } = 200f;
+        public Transform PlayerBody;
+        private float xRotation;
+        private float mouseX;
+        private float mouseY;
 
         #endregion
 
-        void Start()
+        private void Start()
         {
             Cursor.lockState = CursorLockMode.Locked;
         }
 
 
-        void Update()
+        private void FixedUpdate()
         {
-            mouseX = Input.GetAxis("Mouse X") * mouseSensetivity * Time.deltaTime;
-            mouseY = Input.GetAxis("Mouse Y") * mouseSensetivity * Time.deltaTime;
+            mouseX = Input.GetAxis("Mouse X") * MouseSensetivity * Time.deltaTime;
+            mouseY = Input.GetAxis("Mouse Y") * MouseSensetivity * Time.deltaTime;
 
             xRotation -= mouseY;
             xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
             transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-            playerBody.Rotate(Vector3.up * mouseX);
+            PlayerBody.Rotate(Vector3.up * mouseX);
         }
-
     }
 }

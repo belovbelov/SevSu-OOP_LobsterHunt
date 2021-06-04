@@ -1,66 +1,76 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Lobster.Entities;
+using Lobster.ScriptableObjetsGenerator;
+using Lobster.Shop;
 using UnityEngine;
-using Assets.Scripts.ScriptableObjetsGenerator;
-using Assets.Scripts.UI;
 
-namespace Assets.Scripts
+namespace Lobster
 {
     public class Weapon : MonoBehaviour
     {
         #region Variables
-
-        public Gun[] loadout;
-        public Transform weaponParent;
-        public Camera fpsCam;
-        GameObject currentWeapon;
-        int currentIndex;
+        public Gun[] Loadout;
+        public Transform WeaponParent;
+        public Camera FpsCam;
+        private GameObject currentWeapon;
+        private int currentIndex;
+        
+        //костыль, надо делать что то
+        private bool ableToShoot;
         #endregion
-
+        public void ChangeWeapon(int level)
+        {
+            Equip(--level);
+        }
+        private void Start()
+        {
+            Equip(0);
+        }
         private void Update()
         {
+            //жесть
+            ableToShoot = (!GameManager.Instance.GameIsPaused || GameManager.Instance.shop.ShopIsOpen) &&
+                          (GameManager.Instance.GameIsPaused || !GameManager.Instance.shop.ShopIsOpen);
             if (currentWeapon != null)
             {
-                if (!InGameMenu.GameIsPaused)
+                if (ableToShoot)
                 {
                     if (Input.GetButtonDown("Fire1"))
                     {
                         Shoot();
                     }
-                    currentWeapon.transform.localPosition = Vector3.Lerp(currentWeapon.transform.localPosition, Vector3.zero, Time.deltaTime * 5f);
+                    currentWeapon.transform.localPosition = Vector3.Lerp(currentWeapon.transform.localPosition, Vector3.zero, Time.deltaTime * 5f/Score.Instance.Weapon);
                 }
             }
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                Equip(0);
-            }
+            
         }
         #region Private methods
-        void Shoot()
+
+        // ReSharper disable Unity.PerformanceAnalysis
+        private void Shoot()
         {
-            if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out RaycastHit hit, loadout[currentIndex].range))
+            if (Physics.Raycast(FpsCam.transform.position, FpsCam.transform.forward, out RaycastHit hit, Loadout[currentIndex].range))
             {
-                Target target = hit.transform.GetComponent<Target>();
-                if (target != null)
+                var target = hit.transform.GetComponent<Fish>();
+                if (target != null && target.InRange)
                 {
-                    target.takeDamage(loadout[currentIndex].damage);
+                    Score.Instance.UpdateScore(target.TakeDamage(Loadout[currentIndex].damage));
                 }
             }
 
             //Weapon FX
-            currentWeapon.transform.position += currentWeapon.transform.forward * loadout[currentIndex].kickback;
+            currentWeapon.transform.position += currentWeapon.transform.forward * Loadout[currentIndex].kickback;
         }
 
-        private void Equip(int p_ind)
+        private void Equip(int pInd)
         {
             if (currentWeapon != null)
             {
                 Destroy(currentWeapon);
             }
 
-            currentIndex = p_ind;
+            currentIndex = pInd;
 
-            GameObject newWeapon = Instantiate(loadout[p_ind].prefab, weaponParent.position, weaponParent.rotation, weaponParent) as GameObject;
+            var newWeapon = Instantiate(Loadout[pInd].prefab, WeaponParent.position, WeaponParent.rotation, WeaponParent) as GameObject;
             newWeapon.transform.localPosition = Vector3.zero;
             currentWeapon = newWeapon;
         }

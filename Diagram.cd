@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Lobster.BOIDS.Boid" Collapsed="true">
+    <Position X="11.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CBAIACAAAAAAAQAgIIAAAAACABCACCQAAAQAQABAAEI=</HashCode>
+      <FileName>Assets\Scripts\BOIDS\Boid.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lobster.BOIDS.BoidHelper" Collapsed="true">
+    <Position X="13.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAABAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\BOIDS\BoidHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lobster.BOIDS.BoidManager" Collapsed="true">
+    <Position X="15" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEQAAAAAACAAAAAAAAAAAAEACAAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\BOIDS\BoidManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lobster.BOIDS.BoidSettings" Collapsed="true">
+    <Position X="16.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAABBAAAAAAAAAEAAAACEEAAEAACABBAAAAARA=</HashCode>
+      <FileName>Assets\Scripts\BOIDS\BoidSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lobster.BOIDS.Spawner" Collapsed="true">
+    <Position X="11.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EABEAAAAAAIAAAMAAAAAAAIAAAAAAAAAAAAAAAEAAEA=</HashCode>
+      <FileName>Assets\Scripts\BOIDS\Spawner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lobster.Entities.Creature" Collapsed="true">
+    <Position X="3.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Entities\Creature.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lobster.Entities.Enemy" Collapsed="true">
+    <Position X="2" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCAAAQAKAAAAAAAAAAAAAAgAAAAIAAQAAAAgAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Entities\Enemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lobster.Entities.Fish" Collapsed="true">
+    <Position X="2" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgSQACAAALAAgAAgAAAEACAAAEAAEOEASAhRwAAEAEo=</HashCode>
+      <FileName>Assets\Scripts\Entities\Fish.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lobster.Entities.FishSpawner" Collapsed="true">
+    <Position X="11.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAgAAAAAAAAEAAAIAAAAAAAAAAQAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Entities\FishSpawner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lobster.Entities.Player" Collapsed="true">
+    <Position X="4.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AARDAohAg+AKCwAAgpIAMAAgAoFAIABIAAYAAgAgBAA=</HashCode>
+      <FileName>Assets\Scripts\Entities\Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lobster.GameManager" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BEQhICCAACAAQQAAABQAAIAkAABAgAAgwAAAAQoAgEA=</HashCode>
+      <FileName>Assets\Scripts\GameManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Lobster.HeadBob" Collapsed="true">
+    <Position X="5.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAIgABAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\HeadBob.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lobster.HeadBobIdle" Collapsed="true">
+    <Position X="2.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\HeadBob.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lobster.HeadBobJump" Collapsed="true">
+    <Position X="4.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\HeadBob.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lobster.HeadBobRun" Collapsed="true">
+    <Position X="6.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABACAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\HeadBob.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lobster.HeadBobWalk" Collapsed="true">
+    <Position X="9" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\HeadBob.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lobster.MainMenuCamera" Collapsed="true">
+    <Position X="16.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Assets\Scripts\MainMenuCamera.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lobster.MouseLook" Collapsed="true">
+    <Position X="11.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAEAAiAAAAAEAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\MouseLook.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lobster.Score" Collapsed="true">
+    <Position X="15" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAChAABAAAggYAAABAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Score.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lobster.UnderwaterFog" Collapsed="true">
+    <Position X="13.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQAAAAAACAAAAAAQEgCAAABAAAQAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\UnderwaterFog.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lobster.Weapon" Collapsed="true">
+    <Position X="15" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAgCAABICAAAAAAQAAAAAAQAAgAAAAABAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Weapon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lobster.ScriptableObjetsGenerator.Gun" Collapsed="true">
+    <Position X="15" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAgACAAAAASAIAAAIAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\ScriptableObjetsGenerator\Gun.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lobster.Shop.ButtonShop" Collapsed="true">
+    <Position X="18.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Shop\ButtonShop.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lobster.Shop.ShopAlert" Collapsed="true">
+    <Position X="16.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEIAIAYAKAAAAAAAAAAAAAAAACAAIAAYAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Shop\ShopAlert.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lobster.Shop.ShopManager" Collapsed="true">
+    <Position X="18.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAgICAgYACAIAAAEEAAAEBAGAgAAAAABAABAEAAAKAw=</HashCode>
+      <FileName>Assets\Scripts\Shop\ShopManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lobster.UI.MainMenuUI" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="18.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAABABAAAIAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\UI\MainMenuUI.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Lobster.UI.OxygenUI" Collapsed="true">
+    <Position X="13.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAEAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\UI\OxygenUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Lobster.ILoadable" Collapsed="true">
+    <Position X="11.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\ILoadable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

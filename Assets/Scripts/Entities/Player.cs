@@ -1,71 +1,89 @@
-﻿using UnityEngine;
+﻿using System;
+using Lobster.UI;
+using UnityEngine;
 
-namespace Assets.Scripts.Entities
+namespace Lobster.Entities
 {
     public class Player : Creature
     {
-        Player() : base() => playerSpeed = creatureSpeed;
 
         #region Variables
+
         // Movement variables
-        public CharacterController controller;
-        private float playerSpeed;
-        public float gravity = -19.62f;
-        public Transform groundCheck;
-        public float groundDistance = 0.21f;
-        public LayerMask groundMask;
-        public float jumpHeight = 1f;
-        public float sprintModifier;
-        Vector3 velocity;
-        bool isSprinting;
-        public Transform waterCheck;
-        bool sprint;
-        bool jump;
-        bool crouch;
-        public float timeInWater = 0.0f;
+        public CharacterController Controller;
+        private readonly float playerSpeed;
+        [SerializeField] private readonly float gravity = -19.62f;
+        public Transform GroundCheck;
+        [SerializeField] private readonly float groundDistance = 0.21f;
+        public LayerMask GroundMask;
+        [SerializeField] private readonly float jumpHeight = 1f;
+        [SerializeField] private readonly float sprintModifier = 2f;
+        [SerializeField] public float SwimModifier = 0.75f;
+        [SerializeField] public float OxygenReduceRate = 30.0f;
+
+        private Vector3 velocity;
+        public Transform WaterCheck;
+        private bool sprint;
+        private bool jump;
+        private bool crouch;
+        private float timeUnderWater;
+        private float timeToFloat;
+
+        public OxygenUI Slider;
 
         // States
-        bool isGrounded;
-        bool isJumping;
-        bool isSwimming;
-        bool isArising;
-        bool isCrouching;
-        float adjustedSpeed;
-        public static bool isBreathing;
+        private bool isSprinting;
+        private bool isGrounded;
+        private bool isJumping;
+        private bool isSwimming;
+        private bool isArising;
+        private bool isCrouching;
+        private float oxygenRecoveryRate=0.05f;
+        [SerializeField]private float adjustedSpeed;
+        public bool IsBreathing { get; set; }
+        public bool IsDead { get; set; }
+
+        private bool canBreathe;
 
         //FOV
-        public Transform weaponParent;
-        public Camera normalCam;
-        float baseFOV;
-        float sprintFOVModifier = 1.25f;
-        Vector3 weaponOrigin;
+        public Transform WeaponParent;
+        public Camera NormalCam;
+
+        private float baseFov;
+        private const float SprintFovModifier = 1.25f;
+        private Vector3 weaponOrigin;
 
         //weaponBob
-        private Vector3 weaponParentCurrentPos;
-        private Vector3 targetWeaponBobPosition;
-        private float movementCounter;
-        private float idleCounter;
+        public Vector3 WeaponParentCurrentPos { get; set; }
 
+        public Vector3 TargetWeaponBobPosition { get; set; }
 
+        public float MovementCounter { get; set; }
+
+        public float IdleCounter { get; set; }
         #endregion
 
-        void Start()
-        {
-            baseFOV = normalCam.fieldOfView;
-            weaponOrigin = weaponParent.transform.localPosition;
-            weaponParentCurrentPos = weaponOrigin;
+        private Player() => playerSpeed = CreatureSpeed;
 
-            isBreathing = true;
+        private void Start()
+        {
+            baseFov = NormalCam.fieldOfView;
+            weaponOrigin = WeaponParent.transform.localPosition;
+            WeaponParentCurrentPos = weaponOrigin;
+
+            IsBreathing = true;
+            IsDead = false;
+            SwimModifier *= Score.Instance.Speed;
+            OxygenReduceRate *= Score.Instance.Oxygen;
         }
 
-        void Update()
+        private void Update()
         {
             Move();
         }
 
-        public override void Move()
+        private void FixedUpdate()
         {
-            //Axles
             velocity.x = Input.GetAxis("Horizontal");
             velocity.z = Input.GetAxis("Vertical");
 
@@ -75,17 +93,21 @@ namespace Assets.Scripts.Entities
             jump = Input.GetButton("Jump");
             crouch = Input.GetKey(KeyCode.LeftShift);
 
+        }
 
+        public override void Move()
+        {
             //States
             isSprinting = sprint && velocity.z > 0;
-            isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+            isGrounded = Physics.CheckSphere(GroundCheck.position, groundDistance, GroundMask);
             isJumping = jump && isGrounded;
-
-            isSwimming = waterCheck.position.y > transform.position.y;
+            isSwimming = WaterCheck.position.y > GroundCheck.transform.position.y;
+            canBreathe = WaterCheck.position.y < NormalCam.transform.position.y;
             isArising = jump && isSwimming;
             isCrouching = crouch && isSwimming && !isArising;
 
-            isBreathing = (1 - timeInWater / 20.0f) > 0;
+            IsBreathing = (1 - timeUnderWater / OxygenReduceRate) > 0;
+            Slider.SetSlider(1 - timeUnderWater / OxygenReduceRate);
 
             //Movement
             if (isGrounded && velocity.y < 0)
@@ -94,93 +116,96 @@ namespace Assets.Scripts.Entities
             }
 
             adjustedSpeed = playerSpeed;
+            if (isSwimming)
+            {
+                adjustedSpeed *= SwimModifier;
+            }
             if (isSprinting)
             {
                 adjustedSpeed *= sprintModifier;
             }
-            Vector3 move = transform.right * velocity.x + transform.forward * velocity.z;
+
+            var move = transform.right * velocity.x + transform.forward * velocity.z;
             if (move.magnitude > 1)
             {
                 move.Normalize();
             }
-            controller.Move(move * adjustedSpeed * Time.deltaTime);
+
+            Controller.Move(move * (adjustedSpeed * Time.deltaTime));
 
             if (isJumping)
             {
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             }
+
+            if (!canBreathe)
+            {
+                timeUnderWater += Time.deltaTime;
+            }
+            else
+            {
+                timeUnderWater = timeUnderWater > 0 ? timeUnderWater -= oxygenRecoveryRate : timeUnderWater = 0;
+                velocity.y += gravity * Time.deltaTime;
+            }
+
             if (isSwimming)
             {
-                timeInWater += Time.deltaTime;
+                timeToFloat += Time.deltaTime;
                 velocity.y = Mathf.Lerp(velocity.y, -2.0f, Time.deltaTime * 6.0f);
-                if (isArising && timeInWater > 0.15f)
+                if (isArising && timeToFloat > 0.1f)
                 {
-                    velocity.y = Mathf.Lerp(velocity.y, Mathf.Sqrt(-gravity * 2.0f), Time.deltaTime * 8.0f);
+                    velocity.y = Mathf.Lerp(velocity.y, Mathf.Sqrt(-gravity * 3.0f)*SwimModifier, Time.deltaTime * 8.0f);
                 }
+
                 if (isCrouching)
                 {
-                    velocity.y = Mathf.Lerp(velocity.y, -Mathf.Sqrt(-gravity * 2.0f), Time.deltaTime * 8.0f);
+                    velocity.y = Mathf.Lerp(velocity.y, -Mathf.Sqrt(-gravity * 4.0f)*SwimModifier, Time.deltaTime * 8.0f);
                 }
             }
             else
             {
-                timeInWater = 0.0f;
-                velocity.y += gravity * Time.deltaTime;
+                timeToFloat = 0f;
             }
-            controller.Move(velocity * Time.deltaTime);
+
+            Controller.Move(velocity * Time.deltaTime);
 
 
             //FOV
+            ChangeFov();
+
+            var bob = CheckState();
+
+            bob.DoHeadBob();
+        }
+
+        private void ChangeFov()
+        {
             if (isSprinting)
             {
-                normalCam.fieldOfView = Mathf.Lerp(normalCam.fieldOfView, baseFOV * sprintFOVModifier, Time.deltaTime * 8f);
-            }
-            else
-            {
-                normalCam.fieldOfView = Mathf.Lerp(normalCam.fieldOfView, baseFOV, Time.deltaTime * 8f);
-            }
+                NormalCam.fieldOfView = Mathf.Lerp(NormalCam.fieldOfView, baseFov * SprintFovModifier, Time.deltaTime * 8f);
+                return;
+            } 
+            NormalCam.fieldOfView = Mathf.Lerp(NormalCam.fieldOfView, baseFov, Time.deltaTime * 8f);
+        }
 
-            //Head Bob
+        private HeadBob CheckState()
+        {//strategy pattern
             if (!isGrounded && !isSwimming)
             {
-                //airborne
-                HeadBob(idleCounter, 0.015f, 0.015f);
-                idleCounter += Time.deltaTime * 0.5f;
-                if (isSprinting)
-                {
-                    targetWeaponBobPosition.z -= 0.4f;
-                }
-                weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 2f * 0.2f);
+                return new HeadBobJump(this);
             }
-            else if (velocity.x == 0 && velocity.z == 0 || isSwimming)
-            {
-                //idling
-                HeadBob(idleCounter, 0.015f, 0.015f);
-                idleCounter += Time.deltaTime;
-                weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 2f * 0.1f);
-            }
-            else if (!isSwimming && !isSprinting && (velocity.x != 0 || velocity.z != 0))
-            {
-                //walking
-                HeadBob(movementCounter, 0.015f, 0.015f);
-                movementCounter += Time.deltaTime * 5f;
-                weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 12f * 0.15f);
-            }
-            else
-            {
-                //sprinting
-                HeadBob(movementCounter, 0.02f, 0.02f);
-                movementCounter += Time.deltaTime * 6.75f;
-                targetWeaponBobPosition.z -= 0.2f;
-                weaponParent.localPosition = Vector3.MoveTowards(weaponParent.localPosition, targetWeaponBobPosition, Time.deltaTime * 12f * 0.25f);
-            }
-        }
 
-        void HeadBob(float p_z, float p_x_intensity, float p_y_intensity)
-        {
-            float t_aim_adjust = 1f;
-            targetWeaponBobPosition = weaponParentCurrentPos + new Vector3(Mathf.Cos(p_z) * p_x_intensity * t_aim_adjust, Mathf.Sin(p_z * 2) * p_y_intensity * t_aim_adjust, 0);
-        }
+            if (velocity.x == 0 && velocity.z == 0 || isSwimming)
+            {
+                return new HeadBobIdle(this);
+            }
 
+            if (!isSwimming && !isSprinting && (velocity.x != 0 || velocity.z != 0))
+            {
+                return new HeadBobWalk(this);
+            }
+
+            return new HeadBobRun(this);
+        }
     }
 }

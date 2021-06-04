@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Entities
+namespace Lobster.Entities
 {
     public abstract class Creature : MonoBehaviour
     {
-        public float creatureSpeed = 4.0f;
+        [SerializeField]
+        protected float CreatureSpeed = 4.0f;
 
-        abstract public void Move();
+        public abstract void Move();
     }
 }

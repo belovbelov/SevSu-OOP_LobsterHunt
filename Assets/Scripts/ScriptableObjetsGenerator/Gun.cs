@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Scripts.ScriptableObjetsGenerator
+namespace Lobster.ScriptableObjetsGenerator
 {
     [CreateAssetMenu(fileName = "New Gun", menuName = "Gun")]
 
@@ -10,7 +8,7 @@ namespace Assets.Scripts.ScriptableObjetsGenerator
     {
         public string gunName;
         public GameObject prefab;
-        public float damage;
+        public int damage;
         public float range;
         public float aimSpeed;
         public float recoil;

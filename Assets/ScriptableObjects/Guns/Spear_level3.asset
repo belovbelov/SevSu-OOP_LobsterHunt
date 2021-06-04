@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa64a73fac7ceca4ba69e7307440b1e6, type: 3}
+  m_Name: Spear_level3
+  m_EditorClassIdentifier: 
+  gunName: Spear
+  prefab: {fileID: 919132149155446097, guid: d5882329dd515de41929056a7cb04dc2, type: 3}
+  damage: 50
+  range: 200
+  aimSpeed: 5
+  recoil: 10
+  kickback: 15
+  firerate: 5
